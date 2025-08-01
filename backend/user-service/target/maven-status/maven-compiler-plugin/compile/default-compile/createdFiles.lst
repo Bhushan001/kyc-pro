@@ -1,0 +1,7 @@
+com/saasplatform/userservice/dto/CreateUserRequest.class
+com/saasplatform/userservice/dto/UserDto.class
+com/saasplatform/userservice/service/UserService.class
+com/saasplatform/userservice/entity/User.class
+com/saasplatform/userservice/repository/UserRepository.class
+com/saasplatform/userservice/controller/UserController.class
+com/saasplatform/userservice/UserServiceApplication.class

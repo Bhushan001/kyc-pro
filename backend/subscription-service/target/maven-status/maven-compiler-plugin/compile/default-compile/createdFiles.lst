@@ -1,0 +1,7 @@
+com/saasplatform/subscriptionservice/entity/Subscription.class
+com/saasplatform/subscriptionservice/controller/SubscriptionController.class
+com/saasplatform/subscriptionservice/dto/CreateSubscriptionRequest.class
+com/saasplatform/subscriptionservice/service/SubscriptionService.class
+com/saasplatform/subscriptionservice/dto/SubscriptionDto.class
+com/saasplatform/subscriptionservice/repository/SubscriptionRepository.class
+com/saasplatform/subscriptionservice/SubscriptionServiceApplication.class

@@ -1,0 +1,7 @@
+com/saasplatform/moduleservice/entity/Module.class
+com/saasplatform/moduleservice/dto/CreateModuleRequest.class
+com/saasplatform/moduleservice/repository/ModuleRepository.class
+com/saasplatform/moduleservice/controller/ModuleController.class
+com/saasplatform/moduleservice/ModuleServiceApplication.class
+com/saasplatform/moduleservice/service/ModuleService.class
+com/saasplatform/moduleservice/dto/ModuleDto.class

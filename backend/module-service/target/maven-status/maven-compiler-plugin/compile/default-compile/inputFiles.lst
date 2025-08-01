@@ -1,0 +1,7 @@
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/repository/ModuleRepository.java
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/controller/ModuleController.java
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/service/ModuleService.java
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/dto/ModuleDto.java
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/dto/CreateModuleRequest.java
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/entity/Module.java
+/Users/bhushangadekar/Downloads/app/backend/module-service/src/main/java/com/saasplatform/moduleservice/ModuleServiceApplication.java

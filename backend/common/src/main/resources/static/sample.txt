@@ -1,0 +1,1 @@
+This is a sample static resource from the common module.

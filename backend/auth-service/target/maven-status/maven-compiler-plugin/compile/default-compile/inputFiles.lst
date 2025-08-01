@@ -1,0 +1,9 @@
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/repository/UserRepository.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/service/AuthService.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/entity/User.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/controller/AuthController.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/AuthServiceApplication.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/util/JwtUtil.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/dto/AuthResponse.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/config/SecurityConfig.java
+/Users/bhushangadekar/Downloads/app/backend/auth-service/src/main/java/com/saasplatform/authservice/dto/LoginRequest.java

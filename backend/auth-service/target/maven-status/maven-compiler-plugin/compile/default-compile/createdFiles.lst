@@ -1,0 +1,9 @@
+com/saasplatform/authservice/entity/User.class
+com/saasplatform/authservice/service/AuthService.class
+com/saasplatform/authservice/AuthServiceApplication.class
+com/saasplatform/authservice/repository/UserRepository.class
+com/saasplatform/authservice/controller/AuthController.class
+com/saasplatform/authservice/util/JwtUtil.class
+com/saasplatform/authservice/config/SecurityConfig.class
+com/saasplatform/authservice/dto/AuthResponse.class
+com/saasplatform/authservice/dto/LoginRequest.class

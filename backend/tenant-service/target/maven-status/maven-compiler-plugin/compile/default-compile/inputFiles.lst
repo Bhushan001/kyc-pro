@@ -1,0 +1,7 @@
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/dto/TenantDto.java
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/repository/TenantRepository.java
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/controller/TenantController.java
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/entity/Tenant.java
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/service/TenantService.java
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/TenantServiceApplication.java
+/Users/bhushangadekar/Downloads/app/backend/tenant-service/src/main/java/com/saasplatform/tenantservice/dto/CreateTenantRequest.java

@@ -1,0 +1,7 @@
+com/saasplatform/tenantservice/dto/TenantDto.class
+com/saasplatform/tenantservice/entity/Tenant.class
+com/saasplatform/tenantservice/TenantServiceApplication.class
+com/saasplatform/tenantservice/dto/CreateTenantRequest.class
+com/saasplatform/tenantservice/repository/TenantRepository.class
+com/saasplatform/tenantservice/controller/TenantController.class
+com/saasplatform/tenantservice/service/TenantService.class
