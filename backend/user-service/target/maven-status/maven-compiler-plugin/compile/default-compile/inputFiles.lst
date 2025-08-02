@@ -1,7 +1,8 @@
-/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/repository/UserRepository.java
 /Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/UserServiceApplication.java
-/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/entity/User.java
-/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/service/UserService.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/config/SecurityConfig.java
 /Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/controller/UserController.java
 /Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/dto/CreateUserRequest.java
 /Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/dto/UserDto.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/entity/User.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/repository/UserRepository.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/service/UserService.java

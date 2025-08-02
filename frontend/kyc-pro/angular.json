@@ -50,7 +50,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/styles/globals.css",
+              "src/styles/components.css"
             ],
             "scripts": []
           },
@@ -109,7 +111,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/styles/globals.css",
+              "src/styles/components.css"
             ],
             "scripts": []
           }

@@ -1,0 +1,53 @@
+server:
+  port: 9086
+
+spring:
+  application:
+    name: keycloak-sync-service
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ekyc_platform}
+    username: ${DATABASE_USERNAME:saas_user}
+    password: ${DATABASE_PASSWORD:saas_password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Keycloak Configuration
+keycloak:
+  auth-server-url: ${KEYCLOAK_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:ekyc}
+  client-id: ${KEYCLOAK_CLIENT_ID:admin-cli}
+  client-secret: ${KEYCLOAK_CLIENT_SECRET:}
+  admin:
+    username: ${KEYCLOAK_ADMIN_USERNAME:admin}
+    password: ${KEYCLOAK_ADMIN_PASSWORD:admin123}
+
+# Eureka Configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Logging
+logging:
+  level:
+    com.ekyc.keycloaksyncservice: DEBUG
+    org.keycloak: INFO 

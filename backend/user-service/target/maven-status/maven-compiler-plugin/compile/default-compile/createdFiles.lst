@@ -3,5 +3,6 @@ com/ekyc/userservice/UserServiceApplication.class
 com/ekyc/userservice/dto/UserDto.class
 com/ekyc/userservice/entity/User.class
 com/ekyc/userservice/service/UserService.class
+com/ekyc/userservice/config/SecurityConfig.class
 com/ekyc/userservice/dto/CreateUserRequest.class
 com/ekyc/userservice/controller/UserController.class

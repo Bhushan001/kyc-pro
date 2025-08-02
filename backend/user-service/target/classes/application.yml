@@ -5,13 +5,13 @@ spring:
   application:
     name: user-service
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/ekyc_platform}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ekyc_platform}
     username: ${DATABASE_USERNAME:saas_user}
     password: ${DATABASE_PASSWORD:saas_password}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:

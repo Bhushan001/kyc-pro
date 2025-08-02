@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9080
 
 spring:
   application:
@@ -26,6 +26,12 @@ spring:
         - id: subscription
           uri: lb://subscription-service
           predicates: [ Path=/api/subscriptions/** ]
+        - id: keycloak-sync
+          uri: lb://keycloak-sync-service
+          predicates: [ Path=/api/keycloak-sync/** ]
+        - id: registry
+          uri: lb://registry-service
+          predicates: [ Path=/api/registry/** ]
 
 eureka:
   client:
