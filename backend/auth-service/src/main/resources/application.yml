@@ -5,7 +5,7 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/saas_platform}
+    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/ekyc_platform}
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:root}
     driver-class-name: org.postgresql.Driver
@@ -20,6 +20,14 @@ spring:
 jwt:
   secret: mySuperSecretKeyWhichShouldBeOverridden
   expiration: 86400 # in seconds (1 day)
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
 
 management:
   endpoints:

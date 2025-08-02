@@ -1,7 +1,7 @@
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/dto/UserDto.java
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/controller/UserController.java
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/dto/CreateUserRequest.java
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/service/UserService.java
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/repository/UserRepository.java
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/entity/User.java
-/Users/bhushangadekar/Downloads/app/backend/user-service/src/main/java/com/saasplatform/userservice/UserServiceApplication.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/repository/UserRepository.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/UserServiceApplication.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/entity/User.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/service/UserService.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/controller/UserController.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/dto/CreateUserRequest.java
+/Users/bhushangadekar/work/kyc-pro/backend/user-service/src/main/java/com/ekyc/userservice/dto/UserDto.java

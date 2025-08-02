@@ -5,7 +5,7 @@ spring:
   application:
     name: subscription-service
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/saas_platform}
+    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/ekyc_platform}
     username: ${DATABASE_USERNAME:saas_user}
     password: ${DATABASE_PASSWORD:saas_password}
     driver-class-name: org.postgresql.Driver
@@ -16,6 +16,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
 
 management:
   endpoints:

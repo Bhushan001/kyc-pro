@@ -1,7 +1,7 @@
-com/saasplatform/userservice/dto/CreateUserRequest.class
-com/saasplatform/userservice/dto/UserDto.class
-com/saasplatform/userservice/service/UserService.class
-com/saasplatform/userservice/entity/User.class
-com/saasplatform/userservice/repository/UserRepository.class
-com/saasplatform/userservice/controller/UserController.class
-com/saasplatform/userservice/UserServiceApplication.class
+com/ekyc/userservice/repository/UserRepository.class
+com/ekyc/userservice/UserServiceApplication.class
+com/ekyc/userservice/dto/UserDto.class
+com/ekyc/userservice/entity/User.class
+com/ekyc/userservice/service/UserService.class
+com/ekyc/userservice/dto/CreateUserRequest.class
+com/ekyc/userservice/controller/UserController.class

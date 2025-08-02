@@ -1,11 +1,24 @@
-# Java
+# ===========================================
+# Kyc-Pro Platform - Optimized .gitignore
+# ===========================================
+
+# ===========================================
+# Java & Spring Boot
+# ===========================================
+
+# Compiled class files
 *.class
-*.jar
-*.war
-*.ear
+
+# Log files
 *.log
+
+# BlueJ files
 *.ctxt
+
+# Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+# Package Files
 *.jar
 *.war
 *.nar
@@ -13,10 +26,16 @@
 *.zip
 *.tar.gz
 *.rar
+
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
 
+# ===========================================
 # Maven
+# ===========================================
+
+# Maven build directories
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -28,63 +47,17 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# IDE
-.idea/
-*.iws
-*.iml
-*.ipr
-.vscode/
-*.swp
-*.swo
-*~
+# ===========================================
+# Node.js & npm
+# ===========================================
 
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Node.js
+# Dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .npm
 .yarn-integrity
-
-# Angular
-dist/
-tmp/
-.angular/
-
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage directory used by tools like istanbul
-coverage/
-
-# nyc test coverage
-.nyc_output
-
-# Dependency directories
-jspm_packages/
 
 # Optional npm cache directory
 .npm
@@ -98,17 +71,242 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# ===========================================
+# Angular
+# ===========================================
+
+# Angular build outputs
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Angular cache
+.angular/
+.angular/cache
+
+# Sass cache
+.sass-cache/
+
+# Coverage reports
+coverage/
+.nyc_output
+
+# ===========================================
+# IDEs and Editors
+# ===========================================
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Sublime Text
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ===========================================
+# Operating System
+# ===========================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ===========================================
+# Environment & Configuration
+# ===========================================
+
+# Environment variables
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
+# Application properties
+application-local.yml
+application-local.properties
+application-dev.yml
+application-dev.properties
+
+# ===========================================
 # Docker
-.dockerignore
+# ===========================================
 
+# Docker files
+.dockerignore
+Dockerfile.local
+docker-compose.override.yml
+
+# ===========================================
 # Database
+# ===========================================
+
+# SQLite
 *.db
 *.sqlite
 *.sqlite3
 
+# PostgreSQL
+*.sql
+*.dump
+
+# ===========================================
+# Logs and Runtime
+# ===========================================
+
+# Log files
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================================
+# Testing
+# ===========================================
+
+# Test coverage
+coverage/
+.nyc_output
+
+# Test reports
+test-results/
+junit.xml
+
+# ===========================================
+# Temporary Files
+# ===========================================
+
 # Temporary files
 *.tmp
-*.temp 
+*.temp
+*.bak
+*.backup
+
+# ===========================================
+# Build Tools
+# ===========================================
+
+# Gradle (if used)
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===========================================
+# Security
+# ===========================================
+
+# Keystore files
+*.jks
+*.keystore
+*.p12
+*.pfx
+
+# Certificate files
+*.crt
+*.pem
+*.key
+
+# ===========================================
+# Application Specific
+# ===========================================
+
+# Kyc-Pro specific
+backend/.env
+backend/env.local
+backend/logs/
+backend/temp/
+
+# Frontend build artifacts
+frontend/*/dist/
+frontend/*/tmp/
+frontend/*/out-tsc/
+
+# ===========================================
+# Development Tools
+# ===========================================
+
+# Connect.lock
+connect.lock
+
+# Libpeerconnection
+libpeerconnection.log
+
+# Testem
+testem.log
+
+# Typings
+typings/
+
+# ===========================================
+# Backup Files
+# ===========================================
+
+# Backup files
+*.orig
+*.rej
+*.orig.*
+*.rej.*
+
+# ===========================================
+# Archive Files
+# ===========================================
+
+# Archive files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip 

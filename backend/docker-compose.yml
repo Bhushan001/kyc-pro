@@ -1,103 +1,51 @@
+version: '3.8'
+
 services:
   # PostgreSQL Database
   postgres:
     image: postgres:15
-    container_name: saas-postgres
+    container_name: ekyc-postgres
     environment:
-      POSTGRES_DB: saas_platform
-      POSTGRES_USER: saas_user
-      POSTGRES_PASSWORD: saas_password
+      POSTGRES_DB: ${POSTGRES_DB:-ekyc_platform}
+      POSTGRES_USER: ${POSTGRES_USER:-saas_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./database/seed-data.sql:/docker-entrypoint-initdb.d/2-seed-data.sql
+    networks:
+      - ekyc-network
+    restart: unless-stopped
 
-  # API Gateway
-  api-gateway:
-    build: ./api-gateway
-    container_name: saas-api-gateway
+  # Keycloak Identity and Access Management
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: ekyc-keycloak
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin123}
+      KC_DB: ${KC_DB:-postgres}
+      KC_DB_URL: ${KC_DB_URL:-jdbc:postgresql://postgres:5432/keycloak}
+      KC_DB_USERNAME: ${KC_DB_USERNAME:-saas_user}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD:-saas_password}
+      KC_HOSTNAME_STRICT: ${KC_HOSTNAME_STRICT:-false}
+      KC_HOSTNAME_STRICT_HTTPS: ${KC_HOSTNAME_STRICT_HTTPS:-false}
+      KC_HTTP_ENABLED: ${KC_HTTP_ENABLED:-true}
+      KC_HEALTH_ENABLED: ${KC_HEALTH_ENABLED:-true}
     ports:
-      - "8080:8080"
+      - "${KEYCLOAK_PORT:-8080}:8080"
     depends_on:
       - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DATABASE_URL=jdbc:postgresql://postgres:5432/saas_platform
-      - DATABASE_USERNAME=saas_user
-      - DATABASE_PASSWORD=saas_password
-
-  # Authentication Service
-  auth-service:
-    build: ./auth-service
-    container_name: saas-auth-service
-    ports:
-      - "8081:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DATABASE_URL=jdbc:postgresql://postgres:5432/saas_platform
-      - DATABASE_USERNAME=saas_user
-      - DATABASE_PASSWORD=saas_password
-      - JWT_SECRET=mySuperSecretKeyWhichShouldBeOverridden
-
-  # Tenant Service
-  tenant-service:
-    build: ./tenant-service
-    container_name: saas-tenant-service
-    ports:
-      - "8082:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DATABASE_URL=jdbc:postgresql://postgres:5432/saas_platform
-      - DATABASE_USERNAME=saas_user
-      - DATABASE_PASSWORD=saas_password
-
-  # User Service
-  user-service:
-    build: ./user-service
-    container_name: saas-user-service
-    ports:
-      - "8083:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DATABASE_URL=jdbc:postgresql://postgres:5432/saas_platform
-      - DATABASE_USERNAME=saas_user
-      - DATABASE_PASSWORD=saas_password
-
-  # Module Service
-  module-service:
-    build: ./module-service
-    container_name: saas-module-service
-    ports:
-      - "8084:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DATABASE_URL=jdbc:postgresql://postgres:5432/saas_platform
-      - DATABASE_USERNAME=saas_user
-      - DATABASE_PASSWORD=saas_password
-
-  # Subscription Service
-  subscription-service:
-    build: ./subscription-service
-    container_name: saas-subscription-service
-    ports:
-      - "8085:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DATABASE_URL=jdbc:postgresql://postgres:5432/saas_platform
-      - DATABASE_USERNAME=saas_user
-      - DATABASE_PASSWORD=saas_password
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+    command: start-dev
 
 volumes:
   postgres_data:
+
+networks:
+  ekyc-network:
+    driver: bridge
