@@ -1,4 +1,5 @@
 /Users/bhushangadekar/work/kyc-pro/backend/tenant-service/src/main/java/com/ekyc/tenantservice/TenantServiceApplication.java
+/Users/bhushangadekar/work/kyc-pro/backend/tenant-service/src/main/java/com/ekyc/tenantservice/config/SecurityConfig.java
 /Users/bhushangadekar/work/kyc-pro/backend/tenant-service/src/main/java/com/ekyc/tenantservice/controller/TenantController.java
 /Users/bhushangadekar/work/kyc-pro/backend/tenant-service/src/main/java/com/ekyc/tenantservice/dto/CreateTenantRequest.java
 /Users/bhushangadekar/work/kyc-pro/backend/tenant-service/src/main/java/com/ekyc/tenantservice/dto/TenantDto.java

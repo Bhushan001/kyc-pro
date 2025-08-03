@@ -1,4 +1,5 @@
 com/ekyc/moduleservice/ModuleServiceApplication.class
+com/ekyc/moduleservice/config/SecurityConfig.class
 com/ekyc/moduleservice/service/ModuleService.class
 com/ekyc/moduleservice/dto/CreateModuleRequest.class
 com/ekyc/moduleservice/entity/Module.class

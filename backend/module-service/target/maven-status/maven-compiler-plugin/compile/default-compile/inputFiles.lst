@@ -1,4 +1,5 @@
 /Users/bhushangadekar/work/kyc-pro/backend/module-service/src/main/java/com/ekyc/moduleservice/ModuleServiceApplication.java
+/Users/bhushangadekar/work/kyc-pro/backend/module-service/src/main/java/com/ekyc/moduleservice/config/SecurityConfig.java
 /Users/bhushangadekar/work/kyc-pro/backend/module-service/src/main/java/com/ekyc/moduleservice/controller/ModuleController.java
 /Users/bhushangadekar/work/kyc-pro/backend/module-service/src/main/java/com/ekyc/moduleservice/dto/CreateModuleRequest.java
 /Users/bhushangadekar/work/kyc-pro/backend/module-service/src/main/java/com/ekyc/moduleservice/dto/ModuleDto.java

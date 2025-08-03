@@ -5,3 +5,4 @@ com/ekyc/tenantservice/repository/TenantRepository.class
 com/ekyc/tenantservice/controller/TenantController.class
 com/ekyc/tenantservice/dto/CreateTenantRequest.class
 com/ekyc/tenantservice/dto/TenantDto.class
+com/ekyc/tenantservice/config/SecurityConfig.class

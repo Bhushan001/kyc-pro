@@ -1,13 +1,14 @@
 package com.ekyc.moduleservice.controller;
 
 import com.ekyc.moduleservice.dto.CreateModuleRequest;
-import com.ekyc.moduleservice.dto.ModuleResponse;
+import com.ekyc.moduleservice.dto.ModuleDto;
 import com.ekyc.moduleservice.service.ModuleService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/modules")
@@ -16,17 +17,17 @@ public class ModuleController {
   public ModuleController(ModuleService service) { this.service = service; }
 
   @PostMapping
-  public ResponseEntity<ModuleResponse> createModule(@Valid @RequestBody CreateModuleRequest req) {
-    return ResponseEntity.ok(service.createModule(req));
+  public ResponseEntity<ModuleDto> createModule(@Valid @RequestBody CreateModuleRequest req) {
+    return ResponseEntity.ok(service.create(req));
   }
 
   @GetMapping
-  public ResponseEntity<List<ModuleResponse>> getAllModules() {
-    return ResponseEntity.ok(service.getAllModules());
+  public ResponseEntity<List<ModuleDto>> getAllModules() {
+    return ResponseEntity.ok(service.getActiveModules());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<ModuleResponse> getModuleById(@PathVariable Long id) {
+  public ResponseEntity<ModuleDto> getModuleById(@PathVariable UUID id) {
     return ResponseEntity.ok(service.getModuleById(id));
   }
 }

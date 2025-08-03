@@ -1,0 +1,741 @@
+{
+	"info": {
+		"_postman_id": "kyc-pro-backend-api",
+		"name": "Kyc-Pro Backend API",
+		"description": "Complete API collection for Kyc-Pro Platform backend services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth Service",
+			"item": [
+				{
+					"name": "User Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@kycpro.com\",\n  \"firstname\": \"Platform\",\n  \"lastname\": \"Admin\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"country\": \"India\",\n  \"password\": \"Admin@123\",\n  \"confirmPassword\": \"Admin@123\",\n  \"role\": \"PLATFORM_ADMIN\",\n  \"termsAccepted\": \"true\"\n}"
+						},
+						"url": {
+							"raw": "{{auth_service_url}}/api/auth/signup",
+							"host": [
+								"{{auth_service_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					}
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@kycpro.com\",\n  \"password\": \"Admin@123\"\n}"
+						},
+						"url": {
+							"raw": "{{auth_service_url}}/api/auth/login",
+							"host": [
+								"{{auth_service_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{auth_service_url}}/actuator/health",
+							"host": [
+								"{{auth_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@tenant.com\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1995-05-15\",\n  \"country\": \"India\",\n  \"role\": \"PLATFORM_USER\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\"\n}"
+						},
+						"url": {
+							"raw": "{{user_service_url}}/api/users/signup",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"signup"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user_service_url}}/api/users/email/user@tenant.com",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"email",
+								"user@tenant.com"
+							]
+						}
+					}
+				},
+				{
+					"name": "Validate Credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "user@tenant.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "User@123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{user_service_url}}/api/users/validate-credentials",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"validate-credentials"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Users by Tenant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user_service_url}}/api/users/tenant/22222222-2222-2222-2222-222222222222",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"tenant",
+								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user_service_url}}/actuator/health",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Tenant Service",
+			"item": [
+				{
+					"name": "Create Tenant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Demo Tenant\",\n  \"domain\": \"demo.kycpro.com\",\n  \"plan\": \"premium\",\n  \"settings\": {\n    \"maxUsers\": 100,\n    \"features\": [\"kyc\", \"aml\", \"compliance\"]\n  },\n  \"branding\": {\n    \"logo\": \"https://demo.kycpro.com/logo.png\",\n    \"primaryColor\": \"#007bff\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{tenant_service_url}}/api/tenants",
+							"host": [
+								"{{tenant_service_url}}"
+							],
+							"path": [
+								"api",
+								"tenants"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Tenants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tenant_service_url}}/api/tenants",
+							"host": [
+								"{{tenant_service_url}}"
+							],
+							"path": [
+								"api",
+								"tenants"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Tenant by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tenant_service_url}}/api/tenants/22222222-2222-2222-2222-222222222222",
+							"host": [
+								"{{tenant_service_url}}"
+							],
+							"path": [
+								"api",
+								"tenants",
+								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tenant_service_url}}/actuator/health",
+							"host": [
+								"{{tenant_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Module Service",
+			"item": [
+				{
+					"name": "Create Module",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"KYC Verification\",\n  \"description\": \"Complete KYC verification module\",\n  \"category\": \"identity\",\n  \"features\": [\"document_verification\", \"face_recognition\", \"liveness_detection\"],\n  \"monthlyPrice\": 99.99,\n  \"yearlyPrice\": 999.99\n}"
+						},
+						"url": {
+							"raw": "{{module_service_url}}/api/modules",
+							"host": [
+								"{{module_service_url}}"
+							],
+							"path": [
+								"api",
+								"modules"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Modules",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{module_service_url}}/api/modules",
+							"host": [
+								"{{module_service_url}}"
+							],
+							"path": [
+								"api",
+								"modules"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Module by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{module_service_url}}/api/modules/33333333-3333-3333-3333-333333333333",
+							"host": [
+								"{{module_service_url}}"
+							],
+							"path": [
+								"api",
+								"modules",
+								"33333333-3333-3333-3333-333333333333"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{module_service_url}}/actuator/health",
+							"host": [
+								"{{module_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Subscription Service",
+			"item": [
+				{
+					"name": "Create Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\",\n  \"moduleId\": \"33333333-3333-3333-3333-333333333333\",\n  \"billingCycle\": \"monthly\",\n  \"price\": 99.99\n}"
+						},
+						"url": {
+							"raw": "{{subscription_service_url}}/api/subscriptions",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"api",
+								"subscriptions"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Subscriptions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{subscription_service_url}}/api/subscriptions",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"api",
+								"subscriptions"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Subscription by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{subscription_service_url}}/api/subscriptions/44444444-4444-4444-4444-444444444444",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"44444444-4444-4444-4444-444444444444"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Subscriptions by Tenant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{subscription_service_url}}/api/subscriptions/tenant/22222222-2222-2222-2222-222222222222",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"tenant",
+								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{subscription_service_url}}/actuator/health",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Registry Service",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"KYC Analyst\",\n  \"roleCode\": \"KYC_ANALYST\",\n  \"description\": \"Role for KYC verification analysts\",\n  \"category\": \"kyc\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\"\n}"
+						},
+						"url": {
+							"raw": "{{registry_service_url}}/api/roles",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{registry_service_url}}/api/roles",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Role by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{registry_service_url}}/api/roles/55555555-5555-5555-5555-555555555555",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"55555555-5555-5555-5555-555555555555"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Roles by Tenant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{registry_service_url}}/api/roles/tenant/22222222-2222-2222-2222-222222222222",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"tenant",
+								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{registry_service_url}}/actuator/health",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Keycloak Sync Service",
+			"item": [
+				{
+					"name": "Sync User to Keycloak",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@tenant.com\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"PLATFORM_USER\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\"\n}"
+						},
+						"url": {
+							"raw": "{{keycloak_sync_service_url}}/api/keycloak-sync/users",
+							"host": [
+								"{{keycloak_sync_service_url}}"
+							],
+							"path": [
+								"api",
+								"keycloak-sync",
+								"users"
+							]
+						}
+					}
+				},
+				{
+					"name": "Sync Role to Keycloak",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"KYC_ANALYST\",\n  \"roleCode\": \"KYC_ANALYST\",\n  \"description\": \"Role for KYC verification analysts\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\"\n}"
+						},
+						"url": {
+							"raw": "{{keycloak_sync_service_url}}/api/keycloak-sync/roles",
+							"host": [
+								"{{keycloak_sync_service_url}}"
+							],
+							"path": [
+								"api",
+								"keycloak-sync",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{keycloak_sync_service_url}}/actuator/health",
+							"host": [
+								"{{keycloak_sync_service_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "API Gateway",
+			"item": [
+				{
+					"name": "Gateway Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_gateway_url}}/actuator/health",
+							"host": [
+								"{{api_gateway_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Eureka Server",
+			"item": [
+				{
+					"name": "Eureka Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{eureka_server_url}}",
+							"host": [
+								"{{eureka_server_url}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Eureka Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{eureka_server_url}}/actuator/health",
+							"host": [
+								"{{eureka_server_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+} 

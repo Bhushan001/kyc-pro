@@ -59,6 +59,196 @@ services:
       retries: 3
       start_period: 60s
 
+  # Eureka Server
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    container_name: ekyc-eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: ekyc-api-gateway
+    ports:
+      - "9080:9080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+    depends_on:
+      - eureka-server
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: ekyc-auth-service
+    ports:
+      - "9081:9081"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
+  # User Service
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: ekyc-user-service
+    ports:
+      - "9082:9082"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
+  # Tenant Service
+  tenant-service:
+    build:
+      context: ./tenant-service
+      dockerfile: Dockerfile
+    container_name: ekyc-tenant-service
+    ports:
+      - "9083:9083"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
+  # Module Service
+  module-service:
+    build:
+      context: ./module-service
+      dockerfile: Dockerfile
+    container_name: ekyc-module-service
+    ports:
+      - "9084:9084"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
+  # Subscription Service
+  subscription-service:
+    build:
+      context: ./subscription-service
+      dockerfile: Dockerfile
+    container_name: ekyc-subscription-service
+    ports:
+      - "9085:9085"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
+  # Registry Service
+  registry-service:
+    build:
+      context: ./registry-service
+      dockerfile: Dockerfile
+    container_name: ekyc-registry-service
+    ports:
+      - "9086:9086"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
+  # Keycloak Sync Service
+  keycloak-sync-service:
+    build:
+      context: ./keycloak-sync-service
+      dockerfile: Dockerfile
+    container_name: ekyc-keycloak-sync-service
+    ports:
+      - "9087:9087"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ekyc_platform
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-saas_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-saas_password}
+    depends_on:
+      - eureka-server
+      - postgres
+      - keycloak
+    networks:
+      - ekyc-network
+    restart: unless-stopped
+
 volumes:
   postgres_data:
 

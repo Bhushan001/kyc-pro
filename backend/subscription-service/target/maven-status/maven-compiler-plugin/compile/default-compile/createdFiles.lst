@@ -1,4 +1,5 @@
 com/ekyc/subscriptionservice/repository/SubscriptionRepository.class
+com/ekyc/subscriptionservice/config/SecurityConfig.class
 com/ekyc/subscriptionservice/dto/SubscriptionDto.class
 com/ekyc/subscriptionservice/SubscriptionServiceApplication.class
 com/ekyc/subscriptionservice/entity/Subscription.class

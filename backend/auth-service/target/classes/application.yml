@@ -35,10 +35,14 @@ keycloak:
   public-client: false
   confidential-port: 0
 
-# User Service Configuration
+# Service URLs
 user:
   service:
     url: ${USER_SERVICE_URL:http://localhost:9082}
+
+tenant:
+  service:
+    url: ${TENANT_SERVICE_URL:http://localhost:9083}
 
 eureka:
   client:

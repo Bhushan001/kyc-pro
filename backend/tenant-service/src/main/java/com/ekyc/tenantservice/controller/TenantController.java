@@ -1,13 +1,14 @@
 package com.ekyc.tenantservice.controller;
 
 import com.ekyc.tenantservice.dto.CreateTenantRequest;
-import com.ekyc.tenantservice.dto.TenantResponse;
+import com.ekyc.tenantservice.dto.TenantDto;
 import com.ekyc.tenantservice.service.TenantService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tenants")
@@ -16,17 +17,17 @@ public class TenantController {
   public TenantController(TenantService service) { this.service = service; }
 
   @PostMapping
-  public ResponseEntity<TenantResponse> createTenant(@Valid @RequestBody CreateTenantRequest req) {
+  public ResponseEntity<TenantDto> createTenant(@Valid @RequestBody CreateTenantRequest req) {
     return ResponseEntity.ok(service.createTenant(req));
   }
 
   @GetMapping
-  public ResponseEntity<List<TenantResponse>> getAllTenants() {
+  public ResponseEntity<List<TenantDto>> getAllTenants() {
     return ResponseEntity.ok(service.getAllTenants());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<TenantResponse> getTenantById(@PathVariable Long id) {
+  public ResponseEntity<TenantDto> getTenantById(@PathVariable UUID id) {
     return ResponseEntity.ok(service.getTenantById(id));
   }
 }

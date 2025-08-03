@@ -5,86 +5,53 @@ spring:
   application:
     name: api-gateway
   cloud:
+    compatibility-verifier:
+      enabled: false
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: auth
-          uri: lb://auth-service
-          predicates: 
-            - Path=/api/auth/**
+        - id: health-check
+          uri: http://localhost:9080
+          predicates:
+            - Path=/health
           filters:
-            - StripPrefix=0
-        - id: tenant
-          uri: lb://tenant-service
-          predicates: 
-            - Path=/api/tenants/**
-          filters:
-            - StripPrefix=0
-        - id: user
-          uri: lb://user-service
-          predicates: 
-            - Path=/api/users/**
-          filters:
-            - StripPrefix=0
-        - id: module
-          uri: lb://module-service
-          predicates: 
-            - Path=/api/modules/**
-          filters:
-            - StripPrefix=0
-        - id: subscription
-          uri: lb://subscription-service
-          predicates: 
-            - Path=/api/subscriptions/**
-          filters:
-            - StripPrefix=0
-        - id: keycloak-sync
-          uri: lb://keycloak-sync-service
-          predicates: 
-            - Path=/api/keycloak-sync/**
-          filters:
-            - StripPrefix=0
-        - id: registry
-          uri: lb://registry-service
-          predicates: 
-            - Path=/api/registry/**
-          filters:
-            - StripPrefix=0
+            - RewritePath=/health, /actuator/health
 
+# Eureka Client Configuration
 eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+    health-check-url-path: /actuator/health
     instance-id: ${spring.application.name}:${server.port}
+  client:
+    enabled: ${EUREKA_ENABLED:true}
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: ${EUREKA_ENABLED:true}
+    fetch-registry: ${EUREKA_ENABLED:true}
 
-# Keycloak Configuration for API Gateway
-keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8080}
-  realm: ${KEYCLOAK_REALM:ekyc}
-  resource: ${KEYCLOAK_CLIENT_ID:ekyc-platform-client}
-  credentials:
-    secret: ${KEYCLOAK_CLIENT_SECRET:}
-  principal-attribute: ${KEYCLOAK_PRINCIPAL_ATTRIBUTE:preferred_username}
-  public-client: false
-  confidential-port: 0
-
-# Management endpoints
+# Actuator Configuration
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,gateway
+        include: health,info,gateway,routes
   endpoint:
     health:
       show-details: always
+    gateway:
+      enabled: true
 
-# Logging for debugging
+# Logging Configuration
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
-    org.springframework.web: DEBUG
+    com.ekyc.api.gateway: DEBUG
+    org.springframework.cloud.netflix.eureka: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

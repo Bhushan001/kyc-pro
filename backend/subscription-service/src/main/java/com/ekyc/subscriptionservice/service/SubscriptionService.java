@@ -37,6 +37,16 @@ public class SubscriptionService {
     return toDto(repo.save(sub));
   }
 
+  public SubscriptionDto getSubscriptionById(UUID id) {
+    Subscription subscription = repo.findById(id)
+      .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + id));
+    return toDto(subscription);
+  }
+
+  public List<SubscriptionDto> getAllSubscriptions() {
+    return repo.findAll().stream().map(this::toDto).collect(Collectors.toList());
+  }
+
   public void delete(UUID id) { repo.deleteById(id); }
 
   private SubscriptionDto toDto(Subscription s) {

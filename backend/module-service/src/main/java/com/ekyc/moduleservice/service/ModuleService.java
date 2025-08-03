@@ -39,6 +39,12 @@ public class ModuleService {
     return toDto(repo.save(m));
   }
 
+  public ModuleDto getModuleById(UUID id) {
+    Module module = repo.findById(id)
+      .orElseThrow(() -> new RuntimeException("Module not found with id: " + id));
+    return toDto(module);
+  }
+
   public void delete(UUID id) { repo.deleteById(id); }
 
   private ModuleDto toDto(Module m) {
