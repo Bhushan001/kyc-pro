@@ -21,23 +21,18 @@ public class User {
   @Column(unique = true)
   private String email;
 
-  @NotBlank
   @Column(name = "password_hash")
   private String passwordHash;
 
-  @NotBlank
   @Column(name = "firstname")
   private String firstname;
 
-  @NotBlank
   @Column(name = "lastname")
   private String lastname;
 
-  @NotBlank
   @Column(name = "date_of_birth")
   private String dateOfBirth;
 
-  @NotBlank
   private String country;
 
   @NotBlank

@@ -369,9 +369,9 @@ provide_resolution_steps() {
     if ! lsof -Pi :4200 -sTCP:LISTEN -t >/dev/null 2>&1; then
         echo "🔧 7. Start frontend applications:"
         echo "   • KYC-Pro Portal: cd frontend/kyc-pro && npm start"
-        echo "   • Hub Portal: cd frontend/hub-portal && npm start"
-        echo "   • Console Portal: cd frontend/console-portal && npm start"
-        echo "   • Workspace Portal: cd frontend/workspace-portal && npm start"
+        echo "   • Hub Portal: cd frontend/hub && npm start"
+        echo "   • Console Portal: cd frontend/console && npm start"
+        echo "   • Workspace Portal: cd frontend/workspace && npm start"
         echo ""
     fi
     

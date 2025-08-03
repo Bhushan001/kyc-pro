@@ -1,0 +1,50 @@
+server:
+  port: 9082
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ekyc_platform}
+    username: ${DATABASE_USERNAME:saas_user}
+    password: ${DATABASE_PASSWORD:saas_password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    com.ekyc.userservice: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Keycloak Configuration for User Service
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:ekyc}
+  resource: ${KEYCLOAK_CLIENT_ID:ekyc-platform-client}
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET:emT3O4n4T5sfjuxM1cScYM8RS6bZZoE7}
+  principal-attribute: ${KEYCLOAK_PRINCIPAL_ATTRIBUTE:preferred_username}
+  public-client: false
+  confidential-port: 0 

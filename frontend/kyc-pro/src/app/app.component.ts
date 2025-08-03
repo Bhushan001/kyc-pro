@@ -12,4 +12,8 @@ import '../styles/globals.css';
     </div>
   `
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {
+    console.log('AppComponent: Angular app initialized');
+  }
+}

@@ -142,7 +142,7 @@
           </p>
         </div>
         <div class="px-6 pb-6 space-y-6">
-          <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-5">
+          <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit()" class="space-y-5">
             <div class="space-y-3">
               <label class="text-foreground font-medium">Email Address</label>
               <div class="relative group">
@@ -209,6 +209,7 @@
             
             <button 
               type="submit" 
+              (click)="onButtonClick()"
               class="w-full h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] rounded-md flex items-center justify-center"
               [disabled]="loginForm.invalid || isLoading"
             >

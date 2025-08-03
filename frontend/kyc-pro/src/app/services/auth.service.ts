@@ -1,18 +1,23 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 interface AuthResponse {
   token: string;
-  refreshToken: string;
   userId: string;
   email: string;
   firstname: string;
   lastname: string;
   role: string;
-  tenantId: string;
+  tenantId: string | null;
+  keycloakId: string | null;
+  status: string;
+  dateOfBirth: string | null;
+  country: string | null;
+  phone: string | null;
 }
 
 interface LoginRequest {
@@ -36,16 +41,25 @@ interface SignupRequest {
 })
 export class AuthService {
   private http = inject(HttpClient);
+  private router = inject(Router);
   private baseUrl = `${environment.apiGatewayUrl}${environment.services.auth}`;
   private currentUserSubject = new BehaviorSubject<AuthResponse | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
   login(req: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, req).pipe(
+    const loginUrl = `${this.baseUrl}/login`;
+    console.log('AuthService: Making login request to:', loginUrl);
+    
+    return this.http.post<AuthResponse>(loginUrl, req).pipe(
       tap((res) => {
+        console.log('AuthService: Login successful, response:', res);
         localStorage.setItem('token', res.token);
         localStorage.setItem('currentUser', JSON.stringify(res));
         this.currentUserSubject.next(res);
+      }),
+      catchError((error) => {
+        console.error('AuthService: Login error:', error);
+        throw error;
       })
     );
   }
@@ -64,27 +78,28 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    window.location.href = '/';
+    this.router.navigate(['/']);
   }
 
   redirectUserBasedOnRole() {
     const user = this.currentUserSubject.value;
     if (!user) {
-      window.location.href = '/login';
+      this.router.navigate(['/login']);
       return;
     }
     switch (user.role) {
       case 'PLATFORM_ADMIN':
-        window.location.href = '/dashboard';
+        // Navigate to hub for platform admins
+        window.location.href = environment.portals.hub;
         break;
       case 'PLATFORM_TENANT_ADMIN':
-        window.location.href = '/dashboard';
+        this.router.navigate(['/dashboard']);
         break;
       case 'PLATFORM_USER':
-        window.location.href = '/dashboard';
+        this.router.navigate(['/dashboard']);
         break;
       default:
-        window.location.href = '/login';
+        this.router.navigate(['/login']);
     }
   }
 }

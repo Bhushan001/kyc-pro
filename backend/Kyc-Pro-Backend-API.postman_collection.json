@@ -204,6 +204,154 @@
 							]
 						}
 					}
+				},
+				{
+					"name": "Delete User by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{user_service_url}}/api/users/123e4567-e89b-12d3-a456-426614174000",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"123e4567-e89b-12d3-a456-426614174000"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete User by Email",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{user_service_url}}/api/users/email/user@tenant.com",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"email",
+								"user@tenant.com"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@tenant.com\",\n  \"firstName\": \"John Updated\",\n  \"lastName\": \"Doe Updated\",\n  \"dateOfBirth\": \"1995-05-15\",\n  \"country\": \"India\",\n  \"phone\": \"+91-9876543210\",\n  \"role\": \"PLATFORM_USER\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\",\n  \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{user_service_url}}/api/users/123e4567-e89b-12d3-a456-426614174000",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"123e4567-e89b-12d3-a456-426614174000"
+							]
+						}
+					}
+				},
+				{
+					"name": "Sync User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{user_service_url}}/api/users/sync/user@tenant.com",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"sync",
+								"user@tenant.com"
+							]
+						}
+					}
+				},
+				{
+					"name": "Social Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"social.user@tenant.com\",\n  \"firstName\": \"Social\",\n  \"lastName\": \"User\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"country\": \"India\",\n  \"role\": \"PLATFORM_USER\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\",\n  \"socialProvider\": \"google\",\n  \"socialUserId\": \"google_123456789\"\n}"
+						},
+						"url": {
+							"raw": "{{user_service_url}}/api/users/social-signup",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"social-signup"
+							]
+						}
+					}
+				},
+				{
+					"name": "Social Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "socialProvider",
+									"value": "google",
+									"type": "text"
+								},
+								{
+									"key": "socialUserId",
+									"value": "google_123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{user_service_url}}/api/users/social-login",
+							"host": [
+								"{{user_service_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"social-login"
+							]
+						}
+					}
 				}
 			]
 		},
@@ -257,6 +405,51 @@
 					"name": "Get Tenant by ID",
 					"request": {
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tenant_service_url}}/api/tenants/22222222-2222-2222-2222-222222222222",
+							"host": [
+								"{{tenant_service_url}}"
+							],
+							"path": [
+								"api",
+								"tenants",
+								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Tenant",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Demo Tenant\",\n  \"domain\": \"updated.demo.kycpro.com\",\n  \"plan\": \"enterprise\",\n  \"settings\": {\n    \"maxUsers\": 500,\n    \"features\": [\"kyc\", \"aml\", \"compliance\", \"advanced_analytics\"]\n  },\n  \"branding\": {\n    \"logo\": \"https://updated.demo.kycpro.com/logo.png\",\n    \"primaryColor\": \"#28a745\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{tenant_service_url}}/api/tenants/22222222-2222-2222-2222-222222222222",
+							"host": [
+								"{{tenant_service_url}}"
+							],
+							"path": [
+								"api",
+								"tenants",
+								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Tenant",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "{{tenant_service_url}}/api/tenants/22222222-2222-2222-2222-222222222222",
@@ -340,6 +533,51 @@
 					"name": "Get Module by ID",
 					"request": {
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{module_service_url}}/api/modules/33333333-3333-3333-3333-333333333333",
+							"host": [
+								"{{module_service_url}}"
+							],
+							"path": [
+								"api",
+								"modules",
+								"33333333-3333-3333-3333-333333333333"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Module",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Enhanced KYC Verification\",\n  \"description\": \"Advanced KYC verification module with AI capabilities\",\n  \"category\": \"identity\",\n  \"features\": [\"document_verification\", \"face_recognition\", \"liveness_detection\", \"ai_analysis\"],\n  \"monthlyPrice\": 149.99,\n  \"yearlyPrice\": 1499.99\n}"
+						},
+						"url": {
+							"raw": "{{module_service_url}}/api/modules/33333333-3333-3333-3333-333333333333",
+							"host": [
+								"{{module_service_url}}"
+							],
+							"path": [
+								"api",
+								"modules",
+								"33333333-3333-3333-3333-333333333333"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Module",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "{{module_service_url}}/api/modules/33333333-3333-3333-3333-333333333333",
@@ -457,6 +695,51 @@
 					}
 				},
 				{
+					"name": "Update Subscription",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\",\n  \"moduleId\": \"33333333-3333-3333-3333-333333333333\",\n  \"billingCycle\": \"yearly\",\n  \"price\": 999.99,\n  \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{subscription_service_url}}/api/subscriptions/44444444-4444-4444-4444-444444444444",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"44444444-4444-4444-4444-444444444444"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Subscription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{subscription_service_url}}/api/subscriptions/44444444-4444-4444-4444-444444444444",
+							"host": [
+								"{{subscription_service_url}}"
+							],
+							"path": [
+								"api",
+								"subscriptions",
+								"44444444-4444-4444-4444-444444444444"
+							]
+						}
+					}
+				},
+				{
 					"name": "Health Check",
 					"request": {
 						"method": "GET",
@@ -554,6 +837,51 @@
 								"roles",
 								"tenant",
 								"22222222-2222-2222-2222-222222222222"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"Senior KYC Analyst\",\n  \"roleCode\": \"SENIOR_KYC_ANALYST\",\n  \"description\": \"Advanced role for senior KYC verification analysts\",\n  \"category\": \"kyc\",\n  \"tenantId\": \"22222222-2222-2222-2222-222222222222\"\n}"
+						},
+						"url": {
+							"raw": "{{registry_service_url}}/api/roles/55555555-5555-5555-5555-555555555555",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"55555555-5555-5555-5555-555555555555"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{registry_service_url}}/api/roles/55555555-5555-5555-5555-555555555555",
+							"host": [
+								"{{registry_service_url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"55555555-5555-5555-5555-555555555555"
 							]
 						}
 					}
@@ -667,6 +995,60 @@
 								"{{api_gateway_url}}"
 							],
 							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "User Service via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_gateway_url}}/user-service/actuator/health",
+							"host": [
+								"{{api_gateway_url}}"
+							],
+							"path": [
+								"user-service",
+								"actuator",
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "Auth Service via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_gateway_url}}/auth-service/actuator/health",
+							"host": [
+								"{{api_gateway_url}}"
+							],
+							"path": [
+								"auth-service",
+								"actuator",
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "Tenant Service via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_gateway_url}}/tenant-service/actuator/health",
+							"host": [
+								"{{api_gateway_url}}"
+							],
+							"path": [
+								"tenant-service",
 								"actuator",
 								"health"
 							]

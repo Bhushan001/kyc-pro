@@ -16,6 +16,7 @@ public class UserSyncRequest {
     private UUID userId;
     private String email;
     private String username;
+    private String keycloakId; // Keycloak user ID for cross-system synchronization
     
     // User details
     private String firstName;
@@ -63,6 +64,9 @@ public class UserSyncRequest {
     
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
+    
+    public String getKeycloakId() { return keycloakId; }
+    public void setKeycloakId(String keycloakId) { this.keycloakId = keycloakId; }
     
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

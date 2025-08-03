@@ -85,6 +85,7 @@ public final class MessageCodes {
     public static final String ERROR_DUPLICATE_KEY = "KP-98";
     public static final String ERROR_UNKNOWN_ERROR = "KP-99";
     public static final String ERROR_USER_CREATION_FAILED = "KP-100";
+    public static final String ERROR_USER_DELETION_FAILED = "KP-101";
     
     private MessageCodes() {
         // Private constructor to prevent instantiation

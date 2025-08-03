@@ -1,6 +1,7 @@
 package com.ekyc.authservice.service;
 
 import com.ekyc.common.dto.UserSyncRequest;
+import com.ekyc.authservice.dto.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +31,7 @@ public class UserServiceClient {
         try {
             logger.info("Creating user via user service: {}", userRequest.getEmail());
             
+            // Call the unified signup endpoint that handles both database and Keycloak
             return restTemplate.postForObject(
                 userServiceUrl + "/api/users/signup",
                 userRequest,

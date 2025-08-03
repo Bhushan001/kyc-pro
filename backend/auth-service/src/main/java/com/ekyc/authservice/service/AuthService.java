@@ -21,53 +21,113 @@ public class AuthService {
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
   private final UserServiceClient userServiceClient;
+  private final KeycloakAuthService keycloakAuthService;
   private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-  public AuthService(UserRepository repo, PasswordEncoder enc, JwtUtil jwt, UserServiceClient userServiceClient) {
+  public AuthService(UserRepository repo, PasswordEncoder enc, JwtUtil jwt, UserServiceClient userServiceClient, KeycloakAuthService keycloakAuthService) {
     this.repo = repo;
     this.passwordEncoder = enc;
     this.jwtUtil = jwt;
     this.userServiceClient = userServiceClient;
+    this.keycloakAuthService = keycloakAuthService;
   }
 
   public AuthResponse login(LoginRequest req) {
-    // First try to validate via user service
-    if (userServiceClient.validateUserCredentials(req.getEmail(), req.getPassword())) {
-      // Get user details from user service
-      UserSyncRequest userSyncRequest = userServiceClient.findUserByEmail(req.getEmail());
-      if (userSyncRequest != null) {
-        // Update last login in local database
-        User localUser = repo.findByEmail(req.getEmail()).orElse(null);
-        if (localUser != null) {
-          localUser.setLastLogin(OffsetDateTime.now());
-          repo.save(localUser);
+    try {
+      logger.info("Login attempt for email: {}", req.getEmail());
+      
+      // First try user service authentication
+      try {
+        if (userServiceClient.validateUserCredentials(req.getEmail(), req.getPassword())) {
+          // Get user details from user service
+          UserSyncRequest userSyncRequest = userServiceClient.findUserByEmail(req.getEmail());
+          if (userSyncRequest != null) {
+            String token = jwtUtil.generateToken(userSyncRequest);
+            logger.info("Login successful via user service for user: {}", req.getEmail());
+            
+            AuthResponse response = new AuthResponse(
+              token, 
+              userSyncRequest.getUserId(), 
+              userSyncRequest.getEmail(), 
+              userSyncRequest.getFirstName(), 
+              userSyncRequest.getLastName(), 
+              userSyncRequest.getRole(), 
+              userSyncRequest.getTenantId()
+            );
+            
+            // Set additional user profile information
+            response.setKeycloakId(userSyncRequest.getKeycloakId());
+            response.setStatus(userSyncRequest.getStatus());
+            response.setDateOfBirth(userSyncRequest.getDateOfBirth());
+            response.setCountry(userSyncRequest.getCountry());
+            response.setPhone(userSyncRequest.getPhone());
+            
+            logger.info("AuthResponse created via user service: token={}, userId={}, email={}, role={}", 
+              token != null ? "present" : "null", 
+              userSyncRequest.getUserId(), 
+              userSyncRequest.getEmail(), 
+              userSyncRequest.getRole());
+            
+            return response;
+          }
         }
-        
-        String token = jwtUtil.generateToken(userSyncRequest);
-        return new AuthResponse(token, userSyncRequest.getUserId(), userSyncRequest.getEmail(), 
-                              userSyncRequest.getFirstName(), userSyncRequest.getLastName(), 
-                              userSyncRequest.getRole(), userSyncRequest.getTenantId());
+      } catch (Exception e) {
+        logger.warn("User service authentication failed, trying Keycloak: {}", e.getMessage());
       }
+      
+      // Fallback to Keycloak authentication
+      logger.info("Trying Keycloak authentication for user: {}", req.getEmail());
+      AuthResponse keycloakResponse = keycloakAuthService.authenticateWithKeycloak(req.getEmail(), req.getPassword());
+      logger.info("Login successful via Keycloak for user: {}", req.getEmail());
+      return keycloakResponse;
+      
+    } catch (Exception e) {
+      logger.error("Login error for email {}: {}", req.getEmail(), e.getMessage(), e);
+      throw new RuntimeException("Login failed: " + e.getMessage());
     }
-    
-    // Fallback to local database check
-    User user = repo.findByEmailAndStatus(req.getEmail(), "active")
-        .orElseThrow(() -> new RuntimeException("User not found or inactive"));
-    if (!passwordEncoder.matches(req.getPassword(), user.getPasswordHash()))
-      throw new RuntimeException("Invalid credentials");
-
-    user.setLastLogin(OffsetDateTime.now());
-    repo.save(user);
-
-    String token = jwtUtil.generateToken(user);
-    return new AuthResponse(token, user.getId(), user.getEmail(), user.getFirstname(), user.getLastname(), user.getRole(), user.getTenantId());
+  }
+  
+  public AuthResponse getUserProfile(String email) {
+    try {
+      logger.info("Getting user profile for email: {}", email);
+      
+      // Get user details from user service
+      UserSyncRequest userSyncRequest = userServiceClient.findUserByEmail(email);
+      if (userSyncRequest != null) {
+        String token = jwtUtil.generateToken(userSyncRequest);
+        logger.info("Profile retrieved successfully for user: {}", email);
+        
+        AuthResponse response = new AuthResponse(
+          token, 
+          userSyncRequest.getUserId(), 
+          userSyncRequest.getEmail(), 
+          userSyncRequest.getFirstName(), 
+          userSyncRequest.getLastName(), 
+          userSyncRequest.getRole(), 
+          userSyncRequest.getTenantId()
+        );
+        
+        // Set additional user profile information
+        response.setKeycloakId(userSyncRequest.getKeycloakId());
+        response.setStatus(userSyncRequest.getStatus());
+        response.setDateOfBirth(userSyncRequest.getDateOfBirth());
+        response.setCountry(userSyncRequest.getCountry());
+        response.setPhone(userSyncRequest.getPhone());
+        
+        return response;
+      } else {
+        logger.error("User not found for email: {}", email);
+        throw new RuntimeException("User not found");
+      }
+      
+    } catch (Exception e) {
+      logger.error("Error getting user profile for email {}: {}", email, e.getMessage(), e);
+      throw new RuntimeException("Failed to get user profile: " + e.getMessage());
+    }
   }
 
   public AuthResponse signup(SignupRequest req) {
-    // Check if user already exists
-    if (repo.findByEmail(req.getEmail()).isPresent()) {
-      throw new RuntimeException("User with this email already exists");
-    }
+    // Note: User existence check is handled by user-service
 
     // Validate terms acceptance
     if (!"true".equals(req.getTermsAccepted())) {
@@ -82,6 +142,8 @@ public class AuthService {
     userSyncRequest.setDateOfBirth(req.getDateOfBirth().toString());
     userSyncRequest.setCountry(req.getCountry());
     userSyncRequest.setRole(req.getRole());
+    // Store plain password for user service, hash will be done by user service
+    userSyncRequest.setPasswordHash(req.getPassword());
     
     // Set tenant_id based on role
     if ("PLATFORM_ADMIN".equals(req.getRole())) {
@@ -98,25 +160,22 @@ public class AuthService {
       if (createdUser != null) {
         logger.info("User successfully created via user service: {}", req.getEmail());
         
-        // Also create a local copy for auth service
-        User localUser = new User();
-        localUser.setId(createdUser.getUserId());
-        localUser.setEmail(createdUser.getEmail());
-        localUser.setFirstname(createdUser.getFirstName());
-        localUser.setLastname(createdUser.getLastName());
-        localUser.setDateOfBirth(createdUser.getDateOfBirth());
-        localUser.setCountry(createdUser.getCountry());
-        localUser.setRole(createdUser.getRole());
-        localUser.setTenantId(createdUser.getTenantId());
-        localUser.setPasswordHash(""); // We don't store password in auth service
-        localUser.setStatus("active");
-        
-        repo.save(localUser);
+        // Note: We don't create a local copy in auth-service anymore since user-service handles database storage
+        // The user-service is the authoritative source for user data
         
         String token = jwtUtil.generateToken(createdUser);
-        return new AuthResponse(token, createdUser.getUserId(), createdUser.getEmail(), 
+        AuthResponse response = new AuthResponse(token, createdUser.getUserId(), createdUser.getEmail(), 
                               createdUser.getFirstName(), createdUser.getLastName(), 
                               createdUser.getRole(), createdUser.getTenantId());
+        
+        // Set additional user profile information
+        response.setKeycloakId(createdUser.getKeycloakId());
+        response.setStatus(createdUser.getStatus());
+        response.setDateOfBirth(createdUser.getDateOfBirth());
+        response.setCountry(createdUser.getCountry());
+        response.setPhone(createdUser.getPhone());
+        
+        return response;
       } else {
         throw new RuntimeException("Failed to create user via user service");
       }

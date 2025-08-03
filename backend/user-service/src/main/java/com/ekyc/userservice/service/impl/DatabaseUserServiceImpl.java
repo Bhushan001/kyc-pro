@@ -25,8 +25,8 @@ public class DatabaseUserServiceImpl implements DatabaseUserService {
     public UserSyncRequest createUser(UserSyncRequest request) {
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setFirstname(request.getFirstName());
+        user.setLastname(request.getLastName());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setCountry(request.getCountry());
         user.setPhone(request.getPhone());
@@ -46,8 +46,8 @@ public class DatabaseUserServiceImpl implements DatabaseUserService {
     public UserSyncRequest createSocialUser(UserSyncRequest request) {
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setFirstname(request.getFirstName());
+        user.setLastname(request.getLastName());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setCountry(request.getCountry());
         user.setPhone(request.getPhone());
@@ -81,8 +81,8 @@ public class DatabaseUserServiceImpl implements DatabaseUserService {
         User user = repository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setFirstname(request.getFirstName());
+        user.setLastname(request.getLastName());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setCountry(request.getCountry());
         user.setPhone(request.getPhone());
@@ -137,8 +137,8 @@ public class DatabaseUserServiceImpl implements DatabaseUserService {
         UserSyncRequest request = new UserSyncRequest();
         request.setUserId(user.getId());
         request.setEmail(user.getEmail());
-        request.setFirstName(user.getFirstName());
-        request.setLastName(user.getLastName());
+        request.setFirstName(user.getFirstname());
+        request.setLastName(user.getLastname());
         request.setDateOfBirth(user.getDateOfBirth());
         request.setCountry(user.getCountry());
         request.setPhone(user.getPhone());

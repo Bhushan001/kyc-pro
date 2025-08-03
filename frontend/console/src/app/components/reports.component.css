@@ -1,0 +1,17 @@
+/* Reports Component Styles */
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Button hover effects */
+button:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Card hover effects */
+.bg-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+} 

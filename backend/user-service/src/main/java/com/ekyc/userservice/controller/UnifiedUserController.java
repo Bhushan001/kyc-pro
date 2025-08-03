@@ -72,10 +72,50 @@ public class UnifiedUserController {
         return ResponseEntity.ok(updatedUser);
     }
     
+    /**
+     * Delete user by ID from both database and Keycloak
+     * 
+     * @param userId The UUID of the user to delete
+     * @return 200 OK if successful, 404 if user not found, 500 if error
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) {
-        unifiedUserService.deleteUser(userId);
-        return ResponseEntity.ok().build();
+        try {
+            // Check if user exists before deletion
+            if (!unifiedUserService.userExistsById(userId)) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            unifiedUserService.deleteUser(userId);
+            return ResponseEntity.ok().build();
+            
+        } catch (Exception e) {
+            // Log the error but return a generic response
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    /**
+     * Delete user by email from both database and Keycloak
+     * 
+     * @param email The email of the user to delete
+     * @return 200 OK if successful, 404 if user not found, 500 if error
+     */
+    @DeleteMapping("/email/{email}")
+    public ResponseEntity<Void> deleteUserByEmail(@PathVariable String email) {
+        try {
+            // Check if user exists before deletion
+            if (!unifiedUserService.userExists(email)) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            unifiedUserService.deleteUserByEmail(email);
+            return ResponseEntity.ok().build();
+            
+        } catch (Exception e) {
+            // Log the error but return a generic response
+            return ResponseEntity.internalServerError().build();
+        }
     }
     
     @PostMapping("/sync/{email}")

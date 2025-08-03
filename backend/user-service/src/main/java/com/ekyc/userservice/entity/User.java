@@ -26,15 +26,19 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @NotBlank
+    @Column(name = "firstname")
+    private String firstname;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @NotBlank
+    @Column(name = "lastname")
+    private String lastname;
 
+    @NotBlank
     @Column(name = "date_of_birth")
     private String dateOfBirth;
 
+    @NotBlank
     private String country;
 
     private String phone;
@@ -42,7 +46,7 @@ public class User {
     @NotBlank
     private String role;
 
-    @Column(name = "tenant_id", nullable = false)
+    @Column(name = "tenant_id", nullable = true)
     private UUID tenantId;
 
     @Column(nullable = false)
@@ -76,11 +80,11 @@ public class User {
     public String getPasswordHash() { return passwordHash; }
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getFirstname() { return firstname; }
+    public void setFirstname(String firstname) { this.firstname = firstname; }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getLastname() { return lastname; }
+    public void setLastname(String lastname) { this.lastname = lastname; }
 
     public String getDateOfBirth() { return dateOfBirth; }
     public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }

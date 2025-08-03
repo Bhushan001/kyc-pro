@@ -23,11 +23,20 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest req) {
     try {
-      return ResponseEntity.ok(service.login(req));
+      logger.info("Login request received for email: {}", req.getEmail());
+      AuthResponse response = service.login(req);
+      logger.info("Login successful for email: {}", req.getEmail());
+      return ResponseEntity.ok(response);
     } catch (Exception e) {
-      logger.error("Login error: ", e);
+      logger.error("Login error for email {}: {}", req.getEmail(), e.getMessage(), e);
       return ResponseEntity.badRequest().build();
     }
+  }
+
+  @GetMapping("/test")
+  public ResponseEntity<String> test() {
+    logger.info("Test endpoint called");
+    return ResponseEntity.ok("Auth service is working!");
   }
 
   @PostMapping("/signup")
@@ -41,6 +50,19 @@ public class AuthController {
     }
   }
 
+  @GetMapping("/profile/{email}")
+  public ResponseEntity<AuthResponse> getUserProfile(@PathVariable String email) {
+    try {
+      logger.info("Profile request received for email: {}", email);
+      AuthResponse response = service.getUserProfile(email);
+      logger.info("Profile retrieved successfully for email: {}", email);
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      logger.error("Profile error for email {}: {}", email, e.getMessage(), e);
+      return ResponseEntity.notFound().build();
+    }
+  }
+  
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
     logger.error("Validation error: {}", ex.getMessage());

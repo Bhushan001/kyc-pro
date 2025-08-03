@@ -51,7 +51,7 @@ public class UserService {
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getName()); // Using name as firstName for backward compatibility
+        user.setFirstname(request.getName()); // Using name as firstname for backward compatibility
         user.setRole(request.getRole());
         user.setTenantId(request.getTenantId());
         user.setStatus("active");
@@ -71,7 +71,7 @@ public class UserService {
         return new UserDto(
                 user.getId(),
                 user.getEmail(),
-                user.getFirstName(), // Using firstName as name for backward compatibility
+                user.getFirstname(), // Using firstname as name for backward compatibility
                 user.getRole(),
                 user.getTenantId(),
                 user.getStatus()

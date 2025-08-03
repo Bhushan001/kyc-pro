@@ -42,7 +42,7 @@ user:
 
 tenant:
   service:
-    url: ${TENANT_SERVICE_URL:http://localhost:9083}
+    url: ${TENANT_SERVICE_URL:http://localhost:9082}
 
 eureka:
   client:

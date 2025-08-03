@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Workspace Portal Specific Styles */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: var(--font-size);
+}
+
+/* Portal-specific overrides */
+.workspace {
+  @apply min-h-screen bg-background;
+}
+
+/* Dashboard specific styles */
+.dashboard-header {
+  @apply bg-card border-b border-border;
+}
+
+.dashboard-sidebar {
+  @apply bg-sidebar border-r border-sidebar-border;
+}
+
+.dashboard-content {
+  @apply flex-1 overflow-auto bg-background;
+}
+
+.dashboard-main {
+  @apply p-6;
+}
+
+/* Task management */
+.task-card {
+  @apply bg-card border border-border rounded-lg shadow-sm;
+}
+
+.task-header {
+  @apply p-4 border-b border-border;
+}
+
+.task-content {
+  @apply p-4;
+}
+
+.task-footer {
+  @apply p-4 border-t border-border;
+}
+
+/* Kanban board */
+.kanban-column {
+  @apply bg-muted rounded-lg p-4 min-h-[500px];
+}
+
+.kanban-card {
+  @apply bg-card border border-border rounded-lg mb-3 cursor-pointer hover:shadow-md transition-shadow;
+}
+
+.kanban-card-header {
+  @apply p-3 border-b border-border;
+}
+
+.kanban-card-content {
+  @apply p-3;
+}
+
+/* KYC workflow */
+.workflow-step {
+  @apply flex items-center space-x-3 p-3 rounded-lg border;
+}
+
+.workflow-step-active {
+  @apply border-primary bg-primary bg-opacity-5;
+}
+
+.workflow-step-completed {
+  @apply border-green-500 bg-green-50;
+}
+
+.workflow-step-pending {
+  @apply border-muted bg-muted bg-opacity-50;
+}
+
+/* Collaboration tools */
+.collaboration-card {
+  @apply bg-card border border-border rounded-lg shadow-sm;
+}
+
+.collaboration-header {
+  @apply p-4 border-b border-border;
+}
+
+.collaboration-content {
+  @apply p-4;
+}
+
+/* Personal dashboard */
+.personal-stats {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+.stat-card {
+  @apply bg-card border border-border rounded-lg p-4;
+}
+
+.stat-value {
+  @apply text-2xl font-bold text-foreground;
+}
+
+.stat-label {
+  @apply text-sm text-muted-foreground;
+}
+
+/* Navigation styles */
+.nav-item {
+  @apply flex items-center space-x-3 px-4 py-2 text-sm font-medium rounded-md transition-colors;
+}
+
+.nav-item-active {
+  @apply nav-item bg-sidebar-accent text-sidebar-accent-foreground;
+}
+
+.nav-item-inactive {
+  @apply nav-item text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
+}
+
+/* Table styles */
+.data-table {
+  @apply w-full border-collapse;
+}
+
+.data-table-header {
+  @apply bg-muted;
+}
+
+.data-table-body {
+  @apply bg-card;
+}
+
+.data-table-row {
+  @apply border-b border-border;
+}
+
+.data-table-head {
+  @apply p-3 text-left font-medium text-muted-foreground;
+}
+
+.data-table-cell {
+  @apply p-3 text-sm;
+}
+
+/* Progress indicators */
+.progress-bar {
+  @apply w-full bg-muted rounded-full h-2;
+}
+
+.progress-fill {
+  @apply bg-primary h-2 rounded-full transition-all;
+}
+
+/* Status indicators */
+.status-indicator {
+  @apply inline-flex items-center space-x-2;
+}
+
+.status-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+.status-dot-success {
+  @apply status-dot bg-green-500;
+}
+
+.status-dot-warning {
+  @apply status-dot bg-yellow-500;
+}
+
+.status-dot-error {
+  @apply status-dot bg-red-500;
+}
+
+.status-dot-info {
+  @apply status-dot bg-blue-500;
+}
+
+/* Form styles */
+.form-section {
+  @apply space-y-4;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground;
+}
+
+.form-label {
+  @apply text-sm font-medium text-foreground;
+}
+
+.form-button {
+  @apply px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary hover:bg-opacity-90 transition-colors;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    @apply w-64;
+  }
+  
+  .personal-stats {
+    @apply grid-cols-1;
+  }
+}

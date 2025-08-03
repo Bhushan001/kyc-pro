@@ -111,9 +111,9 @@ public class ValidationUtils {
      */
     public static boolean isValidRole(String role) {
         return role != null && (
-            "platform_admin".equals(role) || 
-            "tenant_admin".equals(role) || 
-            "user".equals(role)
+            "PLATFORM_ADMIN".equals(role) || 
+            "PLATFORM_TENANT_ADMIN".equals(role) || 
+            "PLATFORM_USER".equals(role)
         );
     }
     

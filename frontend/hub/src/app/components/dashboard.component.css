@@ -1,0 +1,71 @@
+/* Dashboard Component Styles */
+
+/* Custom scrollbar for sidebar */
+nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+nav::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+nav::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Smooth transitions for tab switching */
+main > div {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effects for interactive elements */
+button:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Card hover effects */
+.bg-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+/* Search input focus */
+input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .w-64 {
+    width: 100%;
+  }
+  
+  .flex {
+    flex-direction: column;
+  }
+  
+  nav {
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+} 

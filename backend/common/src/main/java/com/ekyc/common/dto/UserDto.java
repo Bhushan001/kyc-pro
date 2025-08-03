@@ -174,20 +174,20 @@ public class UserDto {
      * Check if user is platform admin
      */
     public boolean isPlatformAdmin() {
-        return "platform_admin".equals(role);
+        return "PLATFORM_ADMIN".equals(role);
     }
     
     /**
      * Check if user is tenant admin
      */
     public boolean isTenantAdmin() {
-        return "tenant_admin".equals(role);
+        return "PLATFORM_TENANT_ADMIN".equals(role);
     }
     
     /**
      * Check if user is regular user
      */
     public boolean isUser() {
-        return "user".equals(role);
+        return "PLATFORM_USER".equals(role);
     }
 } 

@@ -235,13 +235,13 @@ EUREKA_SERVER_URL=http://localhost:8761/eureka/
    cd frontend/kyc-pro && npm start
    
    # Hub Portal
-   cd frontend/hub-portal && npm start
+   cd frontend/hub && npm start
    
    # Console Portal
-   cd frontend/console-portal && npm start
+   cd frontend/console && npm start
    
    # Workspace Portal
-   cd frontend/workspace-portal && npm start
+   cd frontend/workspace && npm start
    ```
 
 4. **Verify Services:**
