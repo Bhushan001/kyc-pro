@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import '../styles/globals.css';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="min-h-screen bg-background">
       <router-outlet></router-outlet>
     </div>
   `

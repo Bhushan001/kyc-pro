@@ -1,6 +1,7 @@
 package com.ekyc.authservice.util;
 
 import com.ekyc.authservice.entity.User;
+import com.ekyc.common.dto.UserSyncRequest;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,18 @@ public class JwtUtil {
     claims.put("role", user.getRole());
     claims.put("tenantId", user.getTenantId() != null ? user.getTenantId().toString() : null);
     return Jwts.builder().claims(claims).subject(user.getEmail())
+      .issuedAt(new Date(System.currentTimeMillis()))
+      .expiration(new Date(System.currentTimeMillis() + expiration*1000))
+      .signWith(getSigningKey()).compact();
+  }
+
+  public String generateToken(UserSyncRequest userSyncRequest) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("userId", userSyncRequest.getUserId() != null ? userSyncRequest.getUserId().toString() : null);
+    claims.put("email", userSyncRequest.getEmail());
+    claims.put("role", userSyncRequest.getRole());
+    claims.put("tenantId", userSyncRequest.getTenantId() != null ? userSyncRequest.getTenantId().toString() : null);
+    return Jwts.builder().claims(claims).subject(userSyncRequest.getEmail())
       .issuedAt(new Date(System.currentTimeMillis()))
       .expiration(new Date(System.currentTimeMillis() + expiration*1000))
       .signWith(getSigningKey()).compact();

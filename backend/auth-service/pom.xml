@@ -61,6 +61,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.ekyc</groupId>
+      <artifactId>common</artifactId>
+      <version>1.0.0</version>
+    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>

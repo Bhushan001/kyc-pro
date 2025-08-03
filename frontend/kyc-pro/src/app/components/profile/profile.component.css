@@ -1,0 +1,16 @@
+/* Profile specific styles */
+.profile-form {
+  transition: all 0.3s ease;
+}
+
+.profile-form.readonly {
+  opacity: 0.8;
+}
+
+.form-field {
+  transition: all 0.2s ease;
+}
+
+.form-field:focus-within {
+  transform: translateY(-1px);
+}

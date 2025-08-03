@@ -1,12 +1,14 @@
 package com.ekyc.keycloaksyncservice.controller;
 
-import com.ekyc.keycloaksyncservice.dto.SyncRequest;
-import com.ekyc.keycloaksyncservice.dto.SyncResponse;
+import com.ekyc.common.dto.SyncResponse;
+import com.ekyc.common.dto.UserSyncRequest;
 import com.ekyc.keycloaksyncservice.service.KeycloakSyncService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/keycloak-sync")
@@ -16,8 +18,14 @@ public class KeycloakSyncController {
     private KeycloakSyncService syncService;
 
     @PostMapping("/users/sync")
-    public ResponseEntity<SyncResponse> syncUser(@Valid @RequestBody SyncRequest request) {
+    public ResponseEntity<SyncResponse> syncUser(@Valid @RequestBody UserSyncRequest request) {
         SyncResponse response = syncService.syncUser(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/users/bulk-sync")
+    public ResponseEntity<SyncResponse> bulkSyncUsers(@Valid @RequestBody List<UserSyncRequest> requests) {
+        SyncResponse response = syncService.bulkSyncUsers(requests);
         return ResponseEntity.ok(response);
     }
 
@@ -31,6 +39,12 @@ public class KeycloakSyncController {
     public ResponseEntity<SyncResponse> syncRole(@RequestParam String roleName, 
                                                @RequestParam String description) {
         SyncResponse response = syncService.syncRole(roleName, description);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/users/{email}")
+    public ResponseEntity<SyncResponse> getUser(@PathVariable String email) {
+        SyncResponse response = syncService.getUser(email);
         return ResponseEntity.ok(response);
     }
 

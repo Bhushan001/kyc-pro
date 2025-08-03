@@ -1,8 +1,16 @@
+com/ekyc/userservice/service/KeycloakUserService.class
+com/ekyc/userservice/service/impl/DatabaseUserServiceImpl.class
+com/ekyc/userservice/service/UserService.class
+com/ekyc/userservice/service/UserSyncService.class
 com/ekyc/userservice/repository/UserRepository.class
 com/ekyc/userservice/UserServiceApplication.class
+com/ekyc/userservice/controller/UnifiedUserController.class
+com/ekyc/userservice/service/impl/UserSyncServiceImpl.class
 com/ekyc/userservice/dto/UserDto.class
 com/ekyc/userservice/entity/User.class
-com/ekyc/userservice/service/UserService.class
 com/ekyc/userservice/config/SecurityConfig.class
 com/ekyc/userservice/dto/CreateUserRequest.class
+com/ekyc/userservice/service/impl/KeycloakUserServiceImpl.class
 com/ekyc/userservice/controller/UserController.class
+com/ekyc/userservice/service/DatabaseUserService.class
+com/ekyc/userservice/service/UnifiedUserService.class

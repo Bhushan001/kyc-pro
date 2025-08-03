@@ -1,5 +1,5 @@
 server:
-  port: 9083
+  port: 9082
 
 spring:
   application:
@@ -34,3 +34,14 @@ management:
 logging:
   level:
     com.ekyc.userservice: DEBUG
+
+# Keycloak Configuration for User Service
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:ekyc}
+  resource: ${KEYCLOAK_CLIENT_ID:ekyc-platform-client}
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET:emT3O4n4T5sfjuxM1cScYM8RS6bZZoE7}
+  principal-attribute: ${KEYCLOAK_PRINCIPAL_ATTRIBUTE:preferred_username}
+  public-client: false
+  confidential-port: 0

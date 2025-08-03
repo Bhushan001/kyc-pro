@@ -1,10 +1,12 @@
 com/ekyc/authservice/util/JwtUtil.class
-com/ekyc/authservice/AuthServiceApplication.class
-com/ekyc/authservice/dto/LoginRequest.class
-com/ekyc/authservice/dto/SignupRequest.class
 com/ekyc/authservice/service/AuthService.class
-com/ekyc/authservice/repository/UserRepository.class
 com/ekyc/authservice/config/SecurityConfig.class
 com/ekyc/authservice/dto/AuthResponse.class
 com/ekyc/authservice/entity/User.class
+com/ekyc/authservice/AuthServiceApplication.class
+com/ekyc/authservice/dto/LoginRequest.class
+com/ekyc/authservice/dto/SignupRequest.class
+com/ekyc/authservice/config/RestTemplateConfig.class
+com/ekyc/authservice/repository/UserRepository.class
 com/ekyc/authservice/controller/AuthController.class
+com/ekyc/authservice/service/UserServiceClient.class

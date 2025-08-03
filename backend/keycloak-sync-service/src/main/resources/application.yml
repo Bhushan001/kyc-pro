@@ -50,4 +50,4 @@ management:
 logging:
   level:
     com.ekyc.keycloaksyncservice: DEBUG
-    org.keycloak: INFO 
+    org.keycloak: DEBUG 

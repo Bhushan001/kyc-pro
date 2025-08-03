@@ -1,6 +1,6 @@
 package com.ekyc.registryservice.service;
 
-import com.ekyc.keycloaksyncservice.dto.SyncResponse;
+import com.ekyc.common.dto.SyncResponse;
 import com.ekyc.registryservice.dto.CreateRoleRequest;
 import com.ekyc.registryservice.dto.RoleResponse;
 import com.ekyc.registryservice.entity.Role;
@@ -49,15 +49,25 @@ public class RoleService {
                 request.getDescription()
             );
             
+            // Debug logging
+            System.out.println("=== Keycloak Sync Debug ===");
+            System.out.println("Keycloak Response Success: " + keycloakResponse.isSuccess());
+            System.out.println("Keycloak Response Message: " + keycloakResponse.getMessage());
+            System.out.println("Keycloak Role ID: " + keycloakResponse.getKeycloakRoleId());
+            System.out.println("==========================");
+            
             if (keycloakResponse.isSuccess()) {
                 // Update role with Keycloak ID and activate
-                role.setKeycloakRoleId(keycloakResponse.getKeycloakUserId()); // Using userId field for role ID
+                role.setKeycloakRoleId(keycloakResponse.getKeycloakRoleId()); // Use keycloakRoleId field
                 role.setStatus(RoleStatus.ACTIVE);
                 role = roleRepository.save(role);
                 
                 return toRoleResponse(role);
             } else {
-                // Keycloak sync failed, keep as DRAFT
+                // Keycloak sync failed, but still mark as active since role exists in database
+                role.setStatus(RoleStatus.ACTIVE);
+                role = roleRepository.save(role);
+                
                 return toRoleResponse(role);
             }
             

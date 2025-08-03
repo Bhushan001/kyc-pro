@@ -9,13 +9,19 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-  @Bean public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
-  @Bean public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.cors().and().csrf().disable()
-      .authorizeHttpRequests(authz -> authz
-          .requestMatchers("/api/auth/**").permitAll()
-          .anyRequest().authenticated()
-      );
+  
+  @Bean 
+  public PasswordEncoder passwordEncoder() { 
+    return new BCryptPasswordEncoder(); 
+  }
+  
+  @Bean 
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(authz -> authz
+            .requestMatchers("/api/auth/**").permitAll()
+            .anyRequest().authenticated()
+        );
     return http.build();
   }
 }

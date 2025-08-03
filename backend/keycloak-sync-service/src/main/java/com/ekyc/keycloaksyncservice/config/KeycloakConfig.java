@@ -18,7 +18,7 @@ public class KeycloakConfig {
     @Value("${keycloak.client-id}")
     private String clientId;
 
-    @Value("${keycloak.client-secret}")
+    @Value("${keycloak.client-secret:}")
     private String clientSecret;
 
     @Value("${keycloak.admin.username}")
@@ -29,13 +29,18 @@ public class KeycloakConfig {
 
     @Bean
     public Keycloak keycloakAdminClient() {
-        return KeycloakBuilder.builder()
+        KeycloakBuilder builder = KeycloakBuilder.builder()
                 .serverUrl(authServerUrl)
-                .realm("master") // Admin realm
+                .realm("master") // Admin realm for admin operations
                 .clientId(clientId)
-                .clientSecret(clientSecret)
                 .username(adminUsername)
-                .password(adminPassword)
-                .build();
+                .password(adminPassword);
+        
+        // Only set client secret if it's not empty
+        if (clientSecret != null && !clientSecret.trim().isEmpty()) {
+            builder.clientSecret(clientSecret);
+        }
+        
+        return builder.build();
     }
 } 

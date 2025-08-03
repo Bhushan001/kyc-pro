@@ -1,4 +1,5 @@
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/AuthServiceApplication.java
+/Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/config/RestTemplateConfig.java
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/config/SecurityConfig.java
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/controller/AuthController.java
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/dto/AuthResponse.java
@@ -7,4 +8,5 @@
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/entity/User.java
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/repository/UserRepository.java
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/service/AuthService.java
+/Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/service/UserServiceClient.java
 /Users/bhushangadekar/work/kyc-pro/backend/auth-service/src/main/java/com/ekyc/authservice/util/JwtUtil.java

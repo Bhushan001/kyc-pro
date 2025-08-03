@@ -12,7 +12,7 @@ public class CreateRoleRequest {
     private String roleName;
     
     @NotBlank(message = "Role code is required")
-    @Pattern(regexp = "^ROLE_[A-Z_]+$", message = "Role code must start with 'ROLE_' and contain only uppercase letters and underscores")
+    @Pattern(regexp = "^[A-Z_]+$", message = "Role code must contain only uppercase letters and underscores")
     private String roleCode;
     
     private String description;

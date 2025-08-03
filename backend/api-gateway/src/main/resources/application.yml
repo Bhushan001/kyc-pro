@@ -13,25 +13,46 @@ spring:
       routes:
         - id: auth
           uri: lb://auth-service
-          predicates: [ Path=/api/auth/** ]
+          predicates: 
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=0
         - id: tenant
           uri: lb://tenant-service
-          predicates: [ Path=/api/tenants/** ]
+          predicates: 
+            - Path=/api/tenants/**
+          filters:
+            - StripPrefix=0
         - id: user
           uri: lb://user-service
-          predicates: [ Path=/api/users/** ]
+          predicates: 
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=0
         - id: module
           uri: lb://module-service
-          predicates: [ Path=/api/modules/** ]
+          predicates: 
+            - Path=/api/modules/**
+          filters:
+            - StripPrefix=0
         - id: subscription
           uri: lb://subscription-service
-          predicates: [ Path=/api/subscriptions/** ]
+          predicates: 
+            - Path=/api/subscriptions/**
+          filters:
+            - StripPrefix=0
         - id: keycloak-sync
           uri: lb://keycloak-sync-service
-          predicates: [ Path=/api/keycloak-sync/** ]
+          predicates: 
+            - Path=/api/keycloak-sync/**
+          filters:
+            - StripPrefix=0
         - id: registry
           uri: lb://registry-service
-          predicates: [ Path=/api/registry/** ]
+          predicates: 
+            - Path=/api/registry/**
+          filters:
+            - StripPrefix=0
 
 eureka:
   client:
@@ -40,3 +61,30 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
+
+# Keycloak Configuration for API Gateway
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:ekyc}
+  resource: ${KEYCLOAK_CLIENT_ID:ekyc-platform-client}
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET:}
+  principal-attribute: ${KEYCLOAK_PRINCIPAL_ATTRIBUTE:preferred_username}
+  public-client: false
+  confidential-port: 0
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+
+# Logging for debugging
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG

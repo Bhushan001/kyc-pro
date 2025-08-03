@@ -74,14 +74,14 @@ export class AuthService {
       return;
     }
     switch (user.role) {
-      case 'platform_admin':
-        window.location.href = '/hub';
+      case 'PLATFORM_ADMIN':
+        window.location.href = '/dashboard';
         break;
-      case 'tenant_admin':
-        window.location.href = '/console';
+      case 'PLATFORM_TENANT_ADMIN':
+        window.location.href = '/dashboard';
         break;
-      case 'user':
-        window.location.href = '/workspace';
+      case 'PLATFORM_USER':
+        window.location.href = '/dashboard';
         break;
       default:
         window.location.href = '/login';

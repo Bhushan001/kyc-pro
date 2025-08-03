@@ -47,17 +47,11 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "src/styles/shared-design-system",
-                "output": "shared-design-system"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.css",
-              "src/styles/shared-design-system/globals.css",
-              "src/styles/shared-design-system/components.css"
+              "src/styles/globals.css"
             ],
             "scripts": []
           },
@@ -113,17 +107,11 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "src/styles/shared-design-system",
-                "output": "shared-design-system"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.css",
-              "src/styles/shared-design-system/globals.css",
-              "src/styles/shared-design-system/components.css"
+              "src/styles/globals.css"
             ],
             "scripts": []
           }

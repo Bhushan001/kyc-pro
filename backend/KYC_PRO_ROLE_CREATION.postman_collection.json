@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "kyc-pro-role-creation",
+		"name": "KYC-Pro Role Creation",
+		"description": "Collection for creating 3 roles in both database and Keycloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Database Role Creation",
+			"item": [
+				{
+					"name": "1. Create Platform Admin Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"Platform Administrator\",\n  \"roleCode\": \"PLATFORM_ADMIN\",\n  \"description\": \"Platform-wide administrator with full system access\",\n  \"category\": \"PLATFORM\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"create"
+							]
+						}
+					}
+				},
+				{
+					"name": "2. Create Platform Tenant Admin Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"Platform Tenant Administrator\",\n  \"roleCode\": \"PLATFORM_TENANT_ADMIN\",\n  \"description\": \"Platform tenant administrator with organization management access\",\n  \"category\": \"PLATFORM\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"create"
+							]
+						}
+					}
+				},
+				{
+					"name": "3. Create Platform User Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"Platform User\",\n  \"roleCode\": \"PLATFORM_USER\",\n  \"description\": \"Platform user with basic access to workspace and KYC workflows\",\n  \"category\": \"PLATFORM\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"create"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Info - Automatic Keycloak Sync",
+			"item": [
+				{
+					"name": "Note: Keycloak Sync is Automatic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Verification",
+			"item": [
+				{
+					"name": "4. Verify Roles in Database (with Keycloak IDs)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "5. Verify Roles in Keycloak",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"description": "Get admin token from Keycloak first"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/auth/realms/ekyc/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"realms",
+								"ekyc",
+								"roles"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Role Management",
+			"item": [
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Role by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/{{role_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Role by Code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/code/{{role_code}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"code",
+								"{{role_code}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleName\": \"Updated Role Name\",\n  \"roleCode\": \"UPDATED_ROLE_CODE\",\n  \"description\": \"Updated role description\",\n  \"category\": \"PLATFORM\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/{{role_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Role by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/registry/roles/{{role_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Health Checks",
+			"item": [
+				{
+					"name": "API Gateway Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "Registry Service Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9087/api/registry/roles/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9087",
+							"path": [
+								"api",
+								"registry",
+								"roles",
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "Keycloak Sync Service Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9086/api/keycloak-sync/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9086",
+							"path": [
+								"api",
+								"keycloak-sync",
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "Keycloak Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/health/ready",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"health",
+								"ready"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "admin_token",
+			"value": "your_keycloak_admin_token_here",
+			"description": "Get this token from Keycloak admin console"
+		},
+		{
+			"key": "role_id",
+			"value": "your_role_id_here",
+			"description": "UUID of the role to manage (get from Get All Roles response)"
+		},
+		{
+			"key": "role_code",
+			"value": "PLATFORM_ADMIN",
+			"description": "Role code to search for (e.g., PLATFORM_ADMIN, PLATFORM_TENANT_ADMIN, PLATFORM_USER)"
+		}
+	]
+} 

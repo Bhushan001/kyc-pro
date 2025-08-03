@@ -16,10 +16,33 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: UTC
 
 jwt:
   secret: mySuperSecretKeyWhichShouldBeOverridden
   expiration: 86400 # in seconds (1 day)
+
+# Keycloak Configuration
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:ekyc}
+  resource: ${KEYCLOAK_CLIENT_ID:ekyc-platform-client}
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET:emT3O4n4T5sfjuxM1cScYM8RS6bZZoE7}
+  principal-attribute: ${KEYCLOAK_PRINCIPAL_ATTRIBUTE:preferred_username}
+  public-client: false
+  confidential-port: 0
+
+# Service URLs
+user:
+  service:
+    url: ${USER_SERVICE_URL:http://localhost:9082}
+
+tenant:
+  service:
+    url: ${TENANT_SERVICE_URL:http://localhost:9083}
 
 eureka:
   client:
