@@ -1,0 +1,14 @@
+<nav class="w-64 bg-card min-h-screen p-6 border-r border-gray-200">
+  <div class="space-y-2">
+    <button 
+      *ngFor="let item of navItems"
+      [class]="item.active ? 'inline-flex items-center justify-start rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-600 text-white hover:bg-purple-700 h-10 px-4 py-2 w-full' : 'inline-flex items-center justify-start rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-100 hover:text-gray-900 h-10 px-4 py-2 w-full'"
+      (click)="onTabClick(item.id)"
+    >
+      <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getIconPath(item.icon)"></path>
+      </svg>
+      {{ item.label }}
+    </button>
+  </div>
+</nav> 

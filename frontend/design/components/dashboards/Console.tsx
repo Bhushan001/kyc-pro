@@ -37,30 +37,30 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-slate-800 border-b border-slate-700 px-6 py-4">
+      <header className="bg-card border-b border-border px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-purple-400" />
-              <span className="text-2xl font-bold text-white">Kyc-Pro Console</span>
+              <Shield className="h-8 w-8 text-purple-600" />
+              <span className="text-2xl font-bold text-foreground">Kyc-Pro Console</span>
             </div>
-            <Badge variant="outline" className="border-purple-500 text-purple-400">Tenant Admin</Badge>
+            <Badge variant="outline" className="border-purple-600 text-purple-600">Tenant Admin</Badge>
           </div>
           
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input 
                 placeholder="Search users, verifications..." 
-                className="pl-10 w-64 bg-slate-700 border-slate-600 text-white"
+                className="pl-10 w-64 bg-input-background border-border text-foreground"
               />
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-slate-300">TechCorp Inc</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-300">{user.name}</span>
+              <span className="text-muted-foreground">TechCorp Inc</span>
+              <span className="text-muted-foreground">•</span>
+              <span className="text-muted-foreground">{user.name}</span>
               <Button onClick={onLogout} variant="outline" size="sm">
                 Logout
               </Button>
@@ -71,7 +71,7 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
 
       <div className="flex">
         {/* Sidebar */}
-        <nav className="w-64 bg-slate-800 min-h-screen p-6">
+        <nav className="w-64 bg-card min-h-screen p-6 border-r border-border">
           <div className="space-y-2">
             <Button 
               variant={activeTab === 'dashboard' ? 'default' : 'ghost'} 
@@ -121,7 +121,7 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-white">Organization Dashboard</h1>
+                <h1 className="text-3xl font-bold text-foreground">Organization Dashboard</h1>
                 <Button className="bg-purple-600 hover:bg-purple-700">
                   <UserPlus className="mr-2 h-4 w-4" />
                   Invite User
@@ -130,68 +130,68 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
 
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Team Members</CardTitle>
-                    <Users className="h-4 w-4 text-purple-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Team Members</CardTitle>
+                    <Users className="h-4 w-4 text-purple-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white">{mockOrgStats.totalUsers}</div>
-                    <p className="text-xs text-green-400">+8 this month</p>
+                    <div className="text-2xl font-bold text-foreground">{mockOrgStats.totalUsers}</div>
+                    <p className="text-xs text-green-600">+8 this month</p>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Pending Verifications</CardTitle>
-                    <Clock className="h-4 w-4 text-yellow-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Pending Verifications</CardTitle>
+                    <Clock className="h-4 w-4 text-yellow-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white">{mockOrgStats.pendingVerifications}</div>
-                    <p className="text-xs text-yellow-400">Requires attention</p>
+                    <div className="text-2xl font-bold text-foreground">{mockOrgStats.pendingVerifications}</div>
+                    <p className="text-xs text-yellow-600">Requires attention</p>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Completed This Month</CardTitle>
-                    <CheckCircle className="h-4 w-4 text-green-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Completed This Month</CardTitle>
+                    <CheckCircle className="h-4 w-4 text-green-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white">{mockOrgStats.completedThisMonth}</div>
-                    <p className="text-xs text-green-400">+15% from last month</p>
+                    <div className="text-2xl font-bold text-foreground">{mockOrgStats.completedThisMonth}</div>
+                    <p className="text-xs text-green-600">+15% from last month</p>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Compliance Score</CardTitle>
-                    <Activity className="h-4 w-4 text-blue-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Compliance Score</CardTitle>
+                    <Activity className="h-4 w-4 text-blue-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white">{mockOrgStats.complianceScore}%</div>
-                    <p className="text-xs text-green-400">Excellent rating</p>
+                    <div className="text-2xl font-bold text-foreground">{mockOrgStats.complianceScore}%</div>
+                    <p className="text-xs text-green-600">Excellent rating</p>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Recent Activity */}
               <div className="grid lg:grid-cols-2 gap-6">
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader>
-                    <CardTitle className="text-white">Recent Verifications</CardTitle>
-                    <CardDescription className="text-slate-400">Latest KYC activities</CardDescription>
+                    <CardTitle className="text-foreground">Recent Verifications</CardTitle>
+                    <CardDescription className="text-muted-foreground">Latest KYC activities</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {mockVerifications.slice(0, 4).map((verification) => (
-                      <div key={verification.id} className="flex items-center space-x-3 p-3 rounded-lg bg-slate-700/50">
+                      <div key={verification.id} className="flex items-center space-x-3 p-3 rounded-lg bg-muted/50">
                         <div className={`h-2 w-2 rounded-full ${
-                          verification.status === 'completed' ? 'bg-green-400' :
-                          verification.status === 'pending' ? 'bg-yellow-400' : 'bg-blue-400'
+                          verification.status === 'completed' ? 'bg-green-600' :
+                          verification.status === 'pending' ? 'bg-yellow-600' : 'bg-blue-600'
                         }`} />
                         <div className="flex-1">
-                          <p className="text-sm text-white">{verification.user}</p>
-                          <p className="text-xs text-slate-400">{verification.type} • {verification.date}</p>
+                          <p className="text-sm text-foreground">{verification.user}</p>
+                          <p className="text-xs text-muted-foreground">{verification.type} • {verification.date}</p>
                         </div>
                         <Badge variant={
                           verification.status === 'completed' ? 'default' :
@@ -204,22 +204,22 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader>
-                    <CardTitle className="text-white">Team Activity</CardTitle>
-                    <CardDescription className="text-slate-400">Recent user activity</CardDescription>
+                    <CardTitle className="text-foreground">Team Activity</CardTitle>
+                    <CardDescription className="text-muted-foreground">Recent user activity</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {mockUsers.slice(0, 4).map((user) => (
-                      <div key={user.id} className="flex items-center space-x-3 p-3 rounded-lg bg-slate-700/50">
-                        <div className="h-8 w-8 rounded-full bg-purple-600/20 flex items-center justify-center">
-                          <span className="text-sm font-medium text-purple-400">
+                      <div key={user.id} className="flex items-center space-x-3 p-3 rounded-lg bg-muted/50">
+                        <div className="h-8 w-8 rounded-full bg-purple-600/10 flex items-center justify-center">
+                          <span className="text-sm font-medium text-purple-600">
                             {user.name.split(' ').map(n => n[0]).join('')}
                           </span>
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-white">{user.name}</p>
-                          <p className="text-xs text-slate-400">Last login: {user.lastLogin}</p>
+                          <p className="text-sm text-foreground">{user.name}</p>
+                          <p className="text-xs text-muted-foreground">Last login: {user.lastLogin}</p>
                         </div>
                         <Badge variant={user.status === 'verified' ? 'default' : 'secondary'}>
                           {user.status}
@@ -235,9 +235,9 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
           {activeTab === 'users' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-white">Team Members</h1>
+                <h1 className="text-3xl font-bold text-foreground">Team Members</h1>
                 <div className="flex space-x-2">
-                  <Button variant="outline" className="border-slate-600">
+                  <Button variant="outline" className="border-border">
                     <Filter className="mr-2 h-4 w-4" />
                     Filter
                   </Button>
@@ -248,24 +248,24 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
                 </div>
               </div>
 
-              <Card className="bg-slate-800 border-slate-700">
+              <Card className="bg-card border-border">
                 <CardHeader>
-                  <CardTitle className="text-white">All Team Members</CardTitle>
-                  <CardDescription className="text-slate-400">Manage your organization's users</CardDescription>
+                  <CardTitle className="text-foreground">All Team Members</CardTitle>
+                  <CardDescription className="text-muted-foreground">Manage your organization's users</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {mockUsers.map((user) => (
-                      <div key={user.id} className="flex items-center justify-between p-4 rounded-lg bg-slate-700/50 hover:bg-slate-700/70 transition-colors">
+                      <div key={user.id} className="flex items-center justify-between p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
                         <div className="flex items-center space-x-4">
-                          <div className="h-10 w-10 rounded-full bg-purple-600/20 flex items-center justify-center">
-                            <span className="font-medium text-purple-400">
+                          <div className="h-10 w-10 rounded-full bg-purple-600/10 flex items-center justify-center">
+                            <span className="font-medium text-purple-600">
                               {user.name.split(' ').map(n => n[0]).join('')}
                             </span>
                           </div>
                           <div>
-                            <h3 className="font-medium text-white">{user.name}</h3>
-                            <p className="text-sm text-slate-400">{user.email} • {user.role}</p>
+                            <h3 className="font-medium text-foreground">{user.name}</h3>
+                            <p className="text-sm text-muted-foreground">{user.email} • {user.role}</p>
                           </div>
                         </div>
                         <div className="flex items-center space-x-3">
@@ -273,9 +273,9 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
                             <Badge variant={user.status === 'verified' ? 'default' : 'secondary'}>
                               {user.status}
                             </Badge>
-                            <p className="text-xs text-slate-400 mt-1">Last login: {user.lastLogin}</p>
+                            <p className="text-xs text-muted-foreground mt-1">Last login: {user.lastLogin}</p>
                           </div>
-                          <Button variant="ghost" size="sm" className="text-slate-400">
+                          <Button variant="ghost" size="sm" className="text-muted-foreground">
                             Manage
                           </Button>
                         </div>
@@ -290,11 +290,11 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
           {/* Additional tabs content */}
           {activeTab === 'verifications' && (
             <div className="space-y-6">
-              <h1 className="text-3xl font-bold text-white">Verification Management</h1>
-              <Card className="bg-slate-800 border-slate-700">
+              <h1 className="text-3xl font-bold text-foreground">Verification Management</h1>
+              <Card className="bg-card border-border">
                 <CardContent className="p-8 text-center">
-                  <Shield className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <p className="text-slate-400">Verification management interface coming soon...</p>
+                  <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">Verification management interface coming soon...</p>
                 </CardContent>
               </Card>
             </div>
@@ -302,11 +302,11 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
 
           {activeTab === 'compliance' && (
             <div className="space-y-6">
-              <h1 className="text-3xl font-bold text-white">Compliance Center</h1>
-              <Card className="bg-slate-800 border-slate-700">
+              <h1 className="text-3xl font-bold text-foreground">Compliance Center</h1>
+              <Card className="bg-card border-border">
                 <CardContent className="p-8 text-center">
-                  <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <p className="text-slate-400">Compliance reporting dashboard coming soon...</p>
+                  <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">Compliance reporting dashboard coming soon...</p>
                 </CardContent>
               </Card>
             </div>
@@ -314,11 +314,11 @@ const Console = ({ user, onLogout }: ConsoleProps) => {
 
           {activeTab === 'settings' && (
             <div className="space-y-6">
-              <h1 className="text-3xl font-bold text-white">Organization Settings</h1>
-              <Card className="bg-slate-800 border-slate-700">
+              <h1 className="text-3xl font-bold text-foreground">Organization Settings</h1>
+              <Card className="bg-card border-border">
                 <CardContent className="p-8 text-center">
-                  <Settings className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <p className="text-slate-400">Organization configuration panel coming soon...</p>
+                  <Settings className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">Organization configuration panel coming soon...</p>
                 </CardContent>
               </Card>
             </div>

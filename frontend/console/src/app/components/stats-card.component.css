@@ -1,0 +1,79 @@
+/* Stats Card Component Specific Styles */
+
+/* Card hover effects */
+.rounded-lg.border.bg-card {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.rounded-lg.border.bg-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Icon animations */
+svg.h-4.w-4 {
+  transition: transform 0.2s ease-in-out;
+}
+
+.rounded-lg.border.bg-card:hover svg.h-4.w-4 {
+  transform: scale(1.2);
+}
+
+/* Value text animation */
+.text-2xl.font-bold {
+  transition: color 0.2s ease-in-out;
+}
+
+.rounded-lg.border.bg-card:hover .text-2xl.font-bold {
+  color: var(--primary);
+}
+
+/* Trend text animation */
+.text-xs {
+  transition: all 0.2s ease-in-out;
+}
+
+.rounded-lg.border.bg-card:hover .text-xs {
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .p-6 {
+    padding: 1rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+  
+  .text-sm {
+    font-size: 0.75rem;
+  }
+}
+
+/* Loading state */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--border);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

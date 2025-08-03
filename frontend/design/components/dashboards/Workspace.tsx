@@ -64,22 +64,22 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-slate-800 border-b border-slate-700 px-6 py-4">
+      <header className="bg-card border-b border-border px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-green-400" />
-              <span className="text-2xl font-bold text-white">Kyc-Pro Workspace</span>
+              <Shield className="h-8 w-8 text-green-600" />
+              <span className="text-2xl font-bold text-foreground">Kyc-Pro Workspace</span>
             </div>
-            <Badge variant="outline" className="border-green-500 text-green-400">Platform User</Badge>
+            <Badge variant="outline" className="border-green-600 text-green-600">Platform User</Badge>
           </div>
           
           <div className="flex items-center space-x-4">
             <div className="text-right">
-              <p className="text-sm text-slate-300">Welcome back, {user.name}</p>
-              <p className="text-xs text-slate-400">Last login: 2 hours ago</p>
+              <p className="text-sm text-muted-foreground">Welcome back, {user.name}</p>
+              <p className="text-xs text-muted-foreground">Last login: 2 hours ago</p>
             </div>
             <Button onClick={onLogout} variant="outline" size="sm">
               Logout
@@ -90,7 +90,7 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
 
       <div className="flex">
         {/* Sidebar */}
-        <nav className="w-64 bg-slate-800 min-h-screen p-6">
+        <nav className="w-64 bg-card min-h-screen p-6 border-r border-border">
           <div className="space-y-2">
             <Button 
               variant={activeTab === 'overview' ? 'default' : 'ghost'} 
@@ -132,7 +132,7 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-white">My Profile</h1>
+                <h1 className="text-3xl font-bold text-foreground">My Profile</h1>
                 <Button className="bg-green-600 hover:bg-green-700">
                   <Upload className="mr-2 h-4 w-4" />
                   Upload Document
@@ -140,19 +140,19 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
               </div>
 
               {/* Profile Completion */}
-              <Card className="bg-gradient-to-br from-green-600/20 to-blue-600/20 border-green-500/50">
+              <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
                 <CardHeader>
-                  <CardTitle className="text-white">Profile Completion</CardTitle>
-                  <CardDescription className="text-slate-300">Complete your verification to unlock full access</CardDescription>
+                  <CardTitle className="text-foreground">Profile Completion</CardTitle>
+                  <CardDescription className="text-muted-foreground">Complete your verification to unlock full access</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-white">Progress</span>
-                      <span className="text-white font-medium">{mockProfile.completionProgress}%</span>
+                      <span className="text-foreground">Progress</span>
+                      <span className="text-foreground font-medium">{mockProfile.completionProgress}%</span>
                     </div>
                     <Progress value={mockProfile.completionProgress} className="h-3" />
-                    <p className="text-sm text-slate-300">
+                    <p className="text-sm text-muted-foreground">
                       {mockProfile.documentsUploaded} of 4 documents uploaded • Last update: {mockProfile.lastUpdate}
                     </p>
                   </div>
@@ -161,61 +161,61 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
 
               {/* Quick Stats */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Documents</CardTitle>
-                    <FileText className="h-4 w-4 text-green-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Documents</CardTitle>
+                    <FileText className="h-4 w-4 text-green-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white">{mockProfile.documentsUploaded}/4</div>
-                    <p className="text-xs text-slate-400">Uploaded</p>
+                    <div className="text-2xl font-bold text-foreground">{mockProfile.documentsUploaded}/4</div>
+                    <p className="text-xs text-muted-foreground">Uploaded</p>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Status</CardTitle>
-                    <Shield className="h-4 w-4 text-yellow-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Status</CardTitle>
+                    <Shield className="h-4 w-4 text-yellow-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white capitalize">{mockProfile.verificationStatus.replace('_', ' ')}</div>
-                    <p className="text-xs text-yellow-400">Review in progress</p>
+                    <div className="text-2xl font-bold text-foreground capitalize">{mockProfile.verificationStatus.replace('_', ' ')}</div>
+                    <p className="text-xs text-yellow-600">Review in progress</p>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-slate-300">Tasks</CardTitle>
-                    <Clock className="h-4 w-4 text-blue-400" />
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Tasks</CardTitle>
+                    <Clock className="h-4 w-4 text-blue-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-white">{mockTasks.filter(t => !t.completed).length}</div>
-                    <p className="text-xs text-blue-400">Pending</p>
+                    <div className="text-2xl font-bold text-foreground">{mockTasks.filter(t => !t.completed).length}</div>
+                    <p className="text-xs text-blue-600">Pending</p>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Action Items */}
               <div className="grid lg:grid-cols-2 gap-6">
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader>
-                    <CardTitle className="text-white">Pending Tasks</CardTitle>
-                    <CardDescription className="text-slate-400">Complete these items to finish verification</CardDescription>
+                    <CardTitle className="text-foreground">Pending Tasks</CardTitle>
+                    <CardDescription className="text-muted-foreground">Complete these items to finish verification</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {mockTasks.filter(task => !task.completed).map((task) => (
-                      <div key={task.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50">
+                      <div key={task.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
                         <div className="flex items-center space-x-3">
                           <div className={`h-2 w-2 rounded-full ${
-                            task.priority === 'high' ? 'bg-red-400' :
-                            task.priority === 'medium' ? 'bg-yellow-400' : 'bg-blue-400'
+                            task.priority === 'high' ? 'bg-red-500' :
+                            task.priority === 'medium' ? 'bg-yellow-500' : 'bg-blue-500'
                           }`} />
                           <div>
-                            <p className="text-sm text-white">{task.title}</p>
-                            <p className="text-xs text-slate-400">Due: {task.dueDate}</p>
+                            <p className="text-sm text-foreground">{task.title}</p>
+                            <p className="text-xs text-muted-foreground">Due: {task.dueDate}</p>
                           </div>
                         </div>
-                        <Button size="sm" variant="outline" className="border-slate-600">
+                        <Button size="sm" variant="outline" className="border-border">
                           Start
                         </Button>
                       </div>
@@ -223,19 +223,19 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800 border-slate-700">
+                <Card className="bg-card border-border">
                   <CardHeader>
-                    <CardTitle className="text-white">Recent Documents</CardTitle>
-                    <CardDescription className="text-slate-400">Your uploaded verification documents</CardDescription>
+                    <CardTitle className="text-foreground">Recent Documents</CardTitle>
+                    <CardDescription className="text-muted-foreground">Your uploaded verification documents</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {mockDocuments.filter(doc => doc.status !== 'required').slice(0, 3).map((doc) => (
-                      <div key={doc.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50">
+                      <div key={doc.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
                         <div className="flex items-center space-x-3">
-                          <FileText className="h-5 w-5 text-slate-400" />
+                          <FileText className="h-5 w-5 text-muted-foreground" />
                           <div>
-                            <p className="text-sm text-white">{doc.name}</p>
-                            <p className="text-xs text-slate-400">{doc.type}</p>
+                            <p className="text-sm text-foreground">{doc.name}</p>
+                            <p className="text-xs text-muted-foreground">{doc.type}</p>
                           </div>
                         </div>
                         <Badge variant={doc.status === 'verified' ? 'default' : 'secondary'}>
@@ -252,7 +252,7 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
           {activeTab === 'documents' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-white">Document Management</h1>
+                <h1 className="text-3xl font-bold text-foreground">Document Management</h1>
                 <Button className="bg-green-600 hover:bg-green-700">
                   <Upload className="mr-2 h-4 w-4" />
                   Upload New Document
@@ -261,28 +261,28 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
 
               <div className="grid gap-6">
                 {mockDocuments.map((doc) => (
-                  <Card key={doc.id} className="bg-slate-800 border-slate-700">
+                  <Card key={doc.id} className="bg-card border-border">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className={`h-12 w-12 rounded-lg flex items-center justify-center ${
-                            doc.status === 'verified' ? 'bg-green-600/20' :
-                            doc.status === 'pending' ? 'bg-yellow-600/20' : 'bg-slate-600/20'
+                            doc.status === 'verified' ? 'bg-green-100' :
+                            doc.status === 'pending' ? 'bg-yellow-100' : 'bg-muted'
                           }`}>
                             {doc.status === 'required' ? (
-                              <Upload className="h-6 w-6 text-slate-400" />
+                              <Upload className="h-6 w-6 text-muted-foreground" />
                             ) : (
                               <FileText className={`h-6 w-6 ${
-                                doc.status === 'verified' ? 'text-green-400' :
-                                doc.status === 'pending' ? 'text-yellow-400' : 'text-slate-400'
+                                doc.status === 'verified' ? 'text-green-600' :
+                                doc.status === 'pending' ? 'text-yellow-600' : 'text-muted-foreground'
                               }`} />
                             )}
                           </div>
                           <div>
-                            <h3 className="font-medium text-white">{doc.name}</h3>
-                            <p className="text-sm text-slate-400">{doc.type}</p>
+                            <h3 className="font-medium text-foreground">{doc.name}</h3>
+                            <p className="text-sm text-muted-foreground">{doc.type}</p>
                             {doc.uploadDate && (
-                              <p className="text-xs text-slate-500">Uploaded: {doc.uploadDate}</p>
+                              <p className="text-xs text-muted-foreground">Uploaded: {doc.uploadDate}</p>
                             )}
                           </div>
                         </div>
@@ -295,7 +295,7 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
                               {doc.status}
                             </Badge>
                             {doc.expiryDate && (
-                              <p className="text-xs text-slate-400 mt-1">Expires: {doc.expiryDate}</p>
+                              <p className="text-xs text-muted-foreground mt-1">Expires: {doc.expiryDate}</p>
                             )}
                           </div>
                           <div className="flex space-x-2">
@@ -306,10 +306,10 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
                               </Button>
                             ) : (
                               <>
-                                <Button size="sm" variant="ghost" className="text-slate-400">
+                                <Button size="sm" variant="ghost" className="text-muted-foreground">
                                   <Eye className="h-4 w-4" />
                                 </Button>
-                                <Button size="sm" variant="ghost" className="text-slate-400">
+                                <Button size="sm" variant="ghost" className="text-muted-foreground">
                                   <Download className="h-4 w-4" />
                                 </Button>
                               </>
@@ -327,11 +327,11 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
           {/* Additional tabs content */}
           {activeTab === 'verification' && (
             <div className="space-y-6">
-              <h1 className="text-3xl font-bold text-white">Verification Status</h1>
-              <Card className="bg-slate-800 border-slate-700">
+              <h1 className="text-3xl font-bold text-foreground">Verification Status</h1>
+              <Card className="bg-card border-border">
                 <CardContent className="p-8 text-center">
-                  <Shield className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <p className="text-slate-400">Detailed verification status coming soon...</p>
+                  <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">Detailed verification status coming soon...</p>
                 </CardContent>
               </Card>
             </div>
@@ -339,11 +339,11 @@ const Workspace = ({ user, onLogout }: WorkspaceProps) => {
 
           {activeTab === 'history' && (
             <div className="space-y-6">
-              <h1 className="text-3xl font-bold text-white">Activity History</h1>
-              <Card className="bg-slate-800 border-slate-700">
+              <h1 className="text-3xl font-bold text-foreground">Activity History</h1>
+              <Card className="bg-card border-border">
                 <CardContent className="p-8 text-center">
-                  <Clock className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <p className="text-slate-400">Activity history timeline coming soon...</p>
+                  <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">Activity history timeline coming soon...</p>
                 </CardContent>
               </Card>
             </div>
