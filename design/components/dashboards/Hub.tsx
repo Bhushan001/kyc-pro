@@ -5,35 +5,105 @@ import { Input } from '../ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { User } from '../../App';
+import { User, Tenant, Application } from '../../App';
+import TenantCreationStepper from '../TenantCreationStepper';
+import TenantManagementModal from '../TenantManagementModal';
+import DebugInfo from '../DebugInfo';
+import { toast } from 'sonner@2.0.3';
 
 interface HubProps {
   user: User;
   onLogout: () => void;
+  tenants: Tenant[];
+  users: User[];
+  applications: Application[];
+  onAddTenant: (tenantData: any) => void;
+  onAssignTenantAdmin: (tenantId: string, userId: string) => void;
 }
 
-const Hub = ({ user, onLogout }: HubProps) => {
+const Hub = ({ user, onLogout, tenants = [], users = [], applications = [], onAddTenant, onAssignTenantAdmin }: HubProps) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [showTenantCreation, setShowTenantCreation] = useState(false);
+  const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
+  const [showTenantManagement, setShowTenantManagement] = useState(false);
 
   const mockStats = {
-    totalTenants: 124,
-    totalUsers: 3456,
+    totalTenants: tenants?.length || 0,
+    totalUsers: users?.length || 0,
     monthlyVerifications: 28934,
     systemHealth: 99.9
   };
-
-  const mockTenants = [
-    { id: '1', name: 'TechCorp Inc', users: 245, status: 'active', plan: 'Professional', lastActive: '2 hours ago' },
-    { id: '2', name: 'Finance Solutions', users: 89, status: 'active', plan: 'Enterprise', lastActive: '1 day ago' },
-    { id: '3', name: 'Healthcare Plus', users: 156, status: 'pending', plan: 'Starter', lastActive: '3 days ago' },
-    { id: '4', name: 'Legal Associates', users: 67, status: 'active', plan: 'Professional', lastActive: '5 hours ago' },
-  ];
 
   const mockAlerts = [
     { id: '1', type: 'warning', message: 'High verification volume detected for TechCorp Inc', time: '10 minutes ago' },
     { id: '2', type: 'info', message: 'New tenant signup: Digital Ventures', time: '2 hours ago' },
     { id: '3', type: 'error', message: 'API rate limit exceeded for Finance Solutions', time: '1 day ago' },
   ];
+
+  const handleAddTenant = () => {
+    setShowTenantCreation(true);
+  };
+
+  const handleTenantCreationComplete = (tenantData: any) => {
+    console.log('New tenant created:', tenantData);
+    onAddTenant(tenantData);
+    toast.success(`Tenant "${tenantData.name}" has been created successfully!`);
+    setShowTenantCreation(false);
+  };
+
+  const handleCloseTenantCreation = () => {
+    setShowTenantCreation(false);
+  };
+
+  const handleManageTenant = (tenant: Tenant) => {
+    setSelectedTenant(tenant);
+    setShowTenantManagement(true);
+  };
+
+  const handleCloseTenantManagement = () => {
+    setShowTenantManagement(false);
+    setSelectedTenant(null);
+  };
+
+  const getTotalRevenue = () => {
+    return (tenants || []).reduce((total, tenant) => total + (tenant.monthlyRevenue || 0), 0);
+  };
+
+  // If showing tenant creation, render the stepper instead of normal content
+  if (showTenantCreation) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="bg-card border-b border-border px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Shield className="h-8 w-8 text-blue-600" />
+                <span className="text-2xl font-bold text-foreground">Kyc-Pro Hub</span>
+              </div>
+              <Badge variant="outline" className="border-blue-600 text-blue-600">Platform Admin</Badge>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <span className="text-muted-foreground">Welcome, {user?.name || 'Admin'}</span>
+                <Button onClick={onLogout} variant="outline" size="sm">
+                  Logout
+                </Button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="p-6">
+          <TenantCreationStepper 
+            onClose={handleCloseTenantCreation}
+            onComplete={handleTenantCreationComplete}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,7 +130,7 @@ const Hub = ({ user, onLogout }: HubProps) => {
               <Bell className="h-5 w-5" />
             </Button>
             <div className="flex items-center space-x-2">
-              <span className="text-muted-foreground">Welcome, {user.name}</span>
+              <span className="text-muted-foreground">Welcome, {user?.name || 'Admin'}</span>
               <Button onClick={onLogout} variant="outline" size="sm">
                 Logout
               </Button>
@@ -118,11 +188,14 @@ const Hub = ({ user, onLogout }: HubProps) => {
 
         {/* Main Content */}
         <main className="flex-1 p-6">
+          {/* Debug Info */}
+          <DebugInfo user={user} />
+
           {activeTab === 'overview' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-foreground">Platform Overview</h1>
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button onClick={handleAddTenant} className="bg-blue-600 hover:bg-blue-700">
                   <Plus className="mr-2 h-4 w-4" />
                   Add Tenant
                 </Button>
@@ -154,11 +227,11 @@ const Hub = ({ user, onLogout }: HubProps) => {
 
                 <Card className="bg-card border-border">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Verifications</CardTitle>
+                    <CardTitle className="text-sm font-medium text-muted-foreground">Monthly Revenue</CardTitle>
                     <Shield className="h-4 w-4 text-green-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-foreground">{mockStats.monthlyVerifications.toLocaleString()}</div>
+                    <div className="text-2xl font-bold text-foreground">${getTotalRevenue().toLocaleString()}</div>
                     <p className="text-xs text-green-600">+24% from last month</p>
                   </CardContent>
                 </Card>
@@ -204,17 +277,22 @@ const Hub = ({ user, onLogout }: HubProps) => {
                     <CardDescription className="text-muted-foreground">Most active organizations</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {mockTenants.slice(0, 3).map((tenant) => (
+                    {(tenants || []).slice(0, 3).map((tenant) => (
                       <div key={tenant.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
                         <div>
                           <p className="font-medium text-foreground">{tenant.name}</p>
-                          <p className="text-sm text-muted-foreground">{tenant.users} users</p>
+                          <p className="text-sm text-muted-foreground">{(tenant.users || []).length} users • ${tenant.monthlyRevenue || 0}/month</p>
                         </div>
                         <Badge variant={tenant.status === 'active' ? 'default' : 'secondary'}>
                           {tenant.status}
                         </Badge>
                       </div>
                     ))}
+                    {(!tenants || tenants.length === 0) && (
+                      <div className="text-center py-4">
+                        <p className="text-muted-foreground">No tenants yet</p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -230,7 +308,7 @@ const Hub = ({ user, onLogout }: HubProps) => {
                     <Filter className="mr-2 h-4 w-4" />
                     Filter
                   </Button>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Button onClick={handleAddTenant} className="bg-blue-600 hover:bg-blue-700">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Tenant
                   </Button>
@@ -244,44 +322,118 @@ const Hub = ({ user, onLogout }: HubProps) => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {mockTenants.map((tenant) => (
-                      <div key={tenant.id} className="flex items-center justify-between p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                        <div className="flex items-center space-x-4">
-                          <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
-                            <Building className="h-5 w-5 text-blue-600" />
+                    {(tenants || []).map((tenant) => {
+                      const tenantAdmin = (users || []).find(u => u.id === tenant.tenantAdminId);
+                      
+                      return (
+                        <div key={tenant.id} className="flex items-center justify-between p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                          <div className="flex items-center space-x-4">
+                            <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
+                              <Building className="h-5 w-5 text-blue-600" />
+                            </div>
+                            <div>
+                              <h3 className="font-medium text-foreground">{tenant.name}</h3>
+                              <p className="text-sm text-muted-foreground">
+                                {(tenant.users || []).length} users • {tenant.type} • {tenant.industry}
+                              </p>
+                              <div className="flex flex-wrap gap-1 mt-1">
+                                {(tenant.subscribedApplications || []).map((appId, index) => {
+                                  const app = (applications || []).find(a => a.id === appId);
+                                  return app ? (
+                                    <Badge key={index} variant="secondary" className="text-xs">
+                                      {app.name}
+                                    </Badge>
+                                  ) : null;
+                                })}
+                              </div>
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="font-medium text-foreground">{tenant.name}</h3>
-                            <p className="text-sm text-muted-foreground">{tenant.users} users • {tenant.plan} plan</p>
+                          <div className="flex items-center space-x-3">
+                            <div className="text-right">
+                              <Badge variant={tenant.status === 'active' ? 'default' : 'secondary'}>
+                                {tenant.status}
+                              </Badge>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                Revenue: ${tenant.monthlyRevenue || 0}/month
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Admin: {tenantAdmin ? tenantAdmin.name : 'Not assigned'}
+                              </p>
+                            </div>
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="text-muted-foreground"
+                              onClick={() => handleManageTenant(tenant)}
+                            >
+                              Manage
+                            </Button>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="text-right">
-                            <Badge variant={tenant.status === 'active' ? 'default' : 'secondary'}>
-                              {tenant.status}
-                            </Badge>
-                            <p className="text-xs text-muted-foreground mt-1">Last active: {tenant.lastActive}</p>
-                          </div>
-                          <Button variant="ghost" size="sm" className="text-muted-foreground">
-                            Manage
-                          </Button>
-                        </div>
+                      );
+                    })}
+                    {(!tenants || tenants.length === 0) && (
+                      <div className="text-center py-8">
+                        <Building className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <p className="text-muted-foreground">No tenants created yet</p>
+                        <p className="text-sm text-muted-foreground">Click "Add Tenant" to create your first organization</p>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </CardContent>
               </Card>
             </div>
           )}
 
-          {/* Additional tabs content would go here */}
+          {/* Additional tabs content */}
           {activeTab === 'users' && (
             <div className="space-y-6">
               <h1 className="text-3xl font-bold text-foreground">User Management</h1>
               <Card className="bg-card border-border">
-                <CardContent className="p-8 text-center">
-                  <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">User management interface coming soon...</p>
+                <CardHeader>
+                  <CardTitle className="text-foreground">All Users</CardTitle>
+                  <CardDescription className="text-muted-foreground">Platform-wide user overview</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {(users || []).map((user) => (
+                      <div key={user.id} className="flex items-center justify-between p-4 rounded-lg bg-muted/30">
+                        <div className="flex items-center space-x-4">
+                          <div className="h-10 w-10 rounded-lg bg-purple-600/10 flex items-center justify-center">
+                            <Users className="h-5 w-5 text-purple-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-medium text-foreground">{user.name}</h3>
+                            <p className="text-sm text-muted-foreground">{user.email}</p>
+                            {user.tenantId && (
+                              <p className="text-xs text-muted-foreground">
+                                Tenant: {(tenants || []).find(t => t.id === user.tenantId)?.name || user.tenantId}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <Badge variant={
+                            user.role === 'platform_admin' ? 'default' :
+                            user.role === 'platform_tenant_admin' ? 'secondary' : 'outline'
+                          }>
+                            {user.role.replace('platform_', '').replace('_', ' ')}
+                          </Badge>
+                          {user.assignedApplications && user.assignedApplications.length > 0 && (
+                            <Badge variant="outline" className="text-xs">
+                              {user.assignedApplications.length} Apps
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    {(!users || users.length === 0) && (
+                      <div className="text-center py-8">
+                        <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <p className="text-muted-foreground">No users found</p>
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -312,6 +464,18 @@ const Hub = ({ user, onLogout }: HubProps) => {
           )}
         </main>
       </div>
+
+      {/* Tenant Management Modal */}
+      {selectedTenant && (
+        <TenantManagementModal
+          isOpen={showTenantManagement}
+          onClose={handleCloseTenantManagement}
+          tenant={selectedTenant}
+          users={users || []}
+          applications={applications || []}
+          onAssignTenantAdmin={onAssignTenantAdmin}
+        />
+      )}
     </div>
   );
 };
