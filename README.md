@@ -2,6 +2,54 @@
 
 A comprehensive multi-tenant KYC (Know Your Customer) platform with role-based access control and modular architecture.
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`documentation/`](./documentation/) directory:
+- **Backend Services** - Detailed API documentation and service guides
+- **Frontend Applications** - Component architecture and development guides
+- **Database Schema** - Complete database design and migration guides
+- **Infrastructure** - Deployment and configuration guides
+- **API Testing** - Postman collections and testing guides
+
+## 🛠️ Technical Stack Overview
+
+### **Backend Architecture**
+- **Framework**: Java 21 + Spring Boot 3.4.0 + Spring Cloud 2024.0.2
+- **Architecture**: Microservices with Service Discovery (Eureka)
+- **API Gateway**: Spring Cloud Gateway with load balancing
+- **Database**: PostgreSQL 15 with multi-schema design
+- **Authentication**: Keycloak 23.0 + JWT tokens
+- **Build Tool**: Maven for dependency management
+- **Containerization**: Docker + Docker Compose
+
+### **Frontend Applications**
+- **Framework**: Angular (multiple versions for different portals)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Custom Design System
+- **Package Manager**: npm
+- **Build Tool**: Angular CLI
+
+### **Infrastructure & DevOps**
+- **Containerization**: Docker containers for all services
+- **Orchestration**: Docker Compose for local development
+- **Service Discovery**: Eureka Server (8761)
+- **API Gateway**: Spring Cloud Gateway (9080)
+- **Database**: PostgreSQL with multi-schema architecture
+- **Identity Management**: Keycloak with custom realm
+
+### **Development Tools**
+- **API Testing**: Postman collections with environment configurations
+- **Database Management**: PostgreSQL with initialization scripts
+- **Health Monitoring**: Spring Boot Actuator endpoints
+- **Logging**: SLF4J with structured logging
+
+### **Design System**
+- **UI Library**: shadcn/ui components (React TypeScript)
+- **Styling**: Tailwind CSS with custom design tokens
+- **Icons**: Lucide React icon library
+- **Theming**: Light/Dark mode support
+- **Accessibility**: ARIA-compliant components
+
 ## 🏗️ Architecture Overview
 
 ### Backend Services (Microservices)
@@ -27,6 +75,8 @@ A comprehensive multi-tenant KYC (Know Your Customer) platform with role-based a
 | **Console Portal** | 4202 | Tenant admin interface | Organization management |
 | **Workspace Portal** | 4203 | User workspace interface | Task management and KYC workflows |
 
+**📖 [Detailed Frontend Documentation](./documentation/frontend/)**
+
 ### Infrastructure Services
 
 | Service | Port | Description | Health Check |
@@ -46,6 +96,8 @@ A comprehensive multi-tenant KYC (Know Your Customer) platform with role-based a
 - `billing` - Subscription and billing data
 - `registry` - Role management data
 
+**📖 [Detailed Database Documentation](./documentation/database/)**
+
 ## 🔐 Keycloak Configuration
 
 ### Realm: `ekyc`
@@ -57,6 +109,21 @@ A comprehensive multi-tenant KYC (Know Your Customer) platform with role-based a
 - **Client ID:** `admin-cli`
 - **Client Secret:** (configured during setup)
 
+**📖 [Keycloak Configuration Documentation](./documentation/database/keycloak-configuration.md)**
+
+## 📋 API Testing & Documentation
+
+### Postman Collections
+- **Kyc-Pro Backend API** - Complete API collection with all endpoints
+- **Environment Files**:
+  - `Kyc-Pro-Direct-Access` - Direct service access for development
+  - `Kyc-Pro-Gateway-Access` - Gateway-based access for production testing
+
+### API Documentation
+- **Service Endpoints** - Detailed endpoint documentation
+- **API Documentation Summary** - Quick reference guide
+- **Health Check Commands** - Service monitoring utilities
+
 ## 🚀 Service Details
 
 ### Backend Services
@@ -65,53 +132,62 @@ A comprehensive multi-tenant KYC (Know Your Customer) platform with role-based a
 - Service discovery and registration
 - Central registry for all microservices
 - Dashboard: http://localhost:8761
+- **📖 [Detailed Documentation](./documentation/backend/eureka-server.md)**
 
 #### **API Gateway (9080)**
 - Central routing and load balancing
 - Route configuration for all services
 - Health check: http://localhost:9080/actuator/health
+- **📖 [Detailed Documentation](./documentation/backend/api-gateway.md)**
 
 #### **Auth Service (9081)**
 - User authentication and authorization
 - JWT token management
 - Password encoding and validation
 - Endpoints: `/api/auth/**`
+- **📖 [Detailed Documentation](./documentation/backend/auth-service.md)**
 
-#### **Tenant Service (9082)**
+#### **Tenant Service (9083)**
 - Multi-tenant management
 - Tenant creation, updates, deletion
 - Tenant-specific configurations
 - Endpoints: `/api/tenants/**`
+- **📖 [Detailed Documentation](./documentation/backend/tenant-service.md)**
 
-#### **User Service (9083)**
+#### **User Service (9082)**
 - User management within tenants
 - User CRUD operations
 - Role assignment
 - Endpoints: `/api/users/**`
+- **📖 [Detailed Documentation](./documentation/backend/user-service.md)**
 
 #### **Module Service (9084)**
 - Business module management
 - Module configuration and settings
 - Module-specific features
 - Endpoints: `/api/modules/**`
+- **📖 [Detailed Documentation](./documentation/backend/module-service.md)**
 
 #### **Subscription Service (9085)**
 - Billing and subscription management
 - Payment processing
 - Subscription lifecycle
 - Endpoints: `/api/subscriptions/**`
+- **📖 [Detailed Documentation](./documentation/backend/subscription-service.md)**
 
-#### **Keycloak Sync Service (9086)**
+#### **Keycloak Sync Service (9087)**
 - Synchronization with Keycloak
 - User and role sync
 - Audit logging
 - Endpoints: `/api/keycloak-sync/**`
+- **📖 [Detailed Documentation](./documentation/backend/keycloak-sync-service.md)**
 
-#### **Registry Service (9087)**
+#### **Registry Service (9086)**
 - Role management and lifecycle
 - Role validation and business rules
 - Integration with Keycloak Sync
 - Endpoints: `/api/registry/**`
+- **📖 [Detailed Documentation](./documentation/backend/registry-service.md)**
 
 ### Frontend Portals
 
