@@ -75,6 +75,8 @@ Comprehensive documentation is available in the [`documentation/`](./documentati
 | **Console Portal** | 4202 | Tenant admin interface | Organization management |
 | **Workspace Portal** | 4203 | User workspace interface | Task management and KYC workflows |
 
+**📖 [Detailed Frontend Documentation](./documentation/frontend/)**
+
 ### Infrastructure Services
 
 | Service | Port | Description | Health Check |
@@ -94,6 +96,8 @@ Comprehensive documentation is available in the [`documentation/`](./documentati
 - `billing` - Subscription and billing data
 - `registry` - Role management data
 
+**📖 [Detailed Database Documentation](./documentation/database/)**
+
 ## 🔐 Keycloak Configuration
 
 ### Realm: `ekyc`
@@ -104,6 +108,8 @@ Comprehensive documentation is available in the [`documentation/`](./documentati
 ### Client Configuration:
 - **Client ID:** `admin-cli`
 - **Client Secret:** (configured during setup)
+
+**📖 [Keycloak Configuration Documentation](./documentation/database/keycloak-configuration.md)**
 
 ## 📋 API Testing & Documentation
 
