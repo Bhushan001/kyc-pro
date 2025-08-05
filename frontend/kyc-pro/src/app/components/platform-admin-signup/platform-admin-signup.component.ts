@@ -3,11 +3,12 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { AuthBackgroundSvgComponent } from '../auth-background-svg/auth-background-svg.component';
 
 @Component({
   selector: 'app-platform-admin-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, AuthBackgroundSvgComponent],
   templateUrl: './platform-admin-signup.component.html',
   styleUrls: ['./platform-admin-signup.component.css']
 })

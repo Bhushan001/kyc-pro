@@ -1,231 +1,112 @@
-<div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-  <!-- Beautiful SVG Background -->
-  <div class="absolute inset-0 overflow-hidden">
-    <svg
-      class="absolute inset-0 w-full h-full"
-      viewBox="0 0 1200 800"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#10B981" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.05" />
-        </linearGradient>
-        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.1" />
-          <stop offset="100%" stopColor="#10B981" stopOpacity="0.05" />
-        </linearGradient>
-        <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.1" />
-          <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.05" />
-        </linearGradient>
-        <radialGradient id="radial1" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#10B981" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      <!-- Top left corner -->
-      <circle
-        cx="100"
-        cy="100"
-        r="80"
-        fill="url(#radial1)"
-        opacity="0.1"
-      />
-      
-      <!-- Top right corner -->
-      <circle
-        cx="1100"
-        cy="120"
-        r="60"
-        fill="url(#grad1)"
-        opacity="0.08"
-      />
-
-      <!-- Bottom left corner -->
-      <path
-        d="M50 650 L150 600 L200 700 L100 750 Z"
-        fill="url(#grad2)"
-        opacity="0.15"
-      />
-      
-      <!-- Bottom right corner -->
-      <path
-        d="M1000 650 L1150 600 L1100 750 L950 700 Z"
-        fill="url(#grad3)"
-        opacity="0.15"
-      />
-
-      <!-- Top edge curve -->
-      <path
-        d="M0 100 Q300 50 600 100 T1200 100"
-        stroke="url(#grad1)"
-        strokeWidth="2"
-        fill="none"
-        opacity="0.15"
-      />
-      
-      <!-- Bottom edge curve -->
-      <path
-        d="M0 700 Q400 650 800 700 T1200 700"
-        stroke="url(#grad2)"
-        strokeWidth="2"
-        fill="none"
-        opacity="0.1"
-      />
-
-      <!-- Top left small elements -->
-      <g>
-        <circle cx="80" cy="80" r="3" fill="#10B981" opacity="0.2" />
-        <circle cx="120" cy="60" r="2" fill="#3B82F6" opacity="0.15" />
-        <circle cx="60" cy="120" r="4" fill="#06B6D4" opacity="0.2" />
-      </g>
-
-      <!-- Top right small elements -->
-      <g>
-        <circle cx="1120" cy="80" r="3" fill="#10B981" opacity="0.2" />
-        <circle cx="1160" cy="100" r="2" fill="#3B82F6" opacity="0.15" />
-        <circle cx="1080" cy="140" r="4" fill="#06B6D4" opacity="0.2" />
-      </g>
-
-      <!-- Bottom left decorative -->
-      <path
-        d="M100 650 Q150 600 100 550 Q50 600 100 650"
-        fill="url(#grad1)"
-        opacity="0.1"
-      />
-
-      <!-- Bottom right decorative -->
-      <path
-        d="M1100 650 Q1150 600 1100 550 Q1050 600 1100 650"
-        fill="url(#grad3)"
-        opacity="0.08"
-      />
-    </svg>
-
-    <div class="absolute top-10 left-10 w-24 h-24 bg-green-500/3 rounded-full blur-xl"></div>
-    <div class="absolute top-10 right-10 w-20 h-20 bg-blue-500/3 rounded-full blur-xl"></div>
-    <div class="absolute bottom-10 left-10 w-16 h-16 bg-cyan-500/3 rounded-full blur-lg"></div>
-    <div class="absolute bottom-10 right-10 w-20 h-20 bg-indigo-500/3 rounded-full blur-lg"></div>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+  <!-- Background SVG -->
+  <div class="absolute inset-0 opacity-30">
+    <app-auth-background-svg></app-auth-background-svg>
   </div>
 
-  <!-- Main Content -->
-  <div class="relative z-10 min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-lg">
-      <!-- Logo and Header -->
-      <div class="text-center mb-8">
-        <div class="flex items-center justify-center space-x-3 mb-6">
-          <div class="relative">
+  <!-- Content -->
+  <div class="relative z-10 min-h-screen flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-md">
+      <!-- Back to home link -->
+      <a routerLink="/" class="inline-flex items-center text-muted-foreground hover:text-foreground mb-8">
+        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to home
+      </a>
+
+      <div class="bg-card border border-border shadow-lg rounded-lg">
+        <div class="p-6 text-center">
+          <div class="flex items-center justify-center mb-4">
             <svg class="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
             </svg>
-            <svg class="h-4 w-4 text-yellow-600 absolute -top-1 -right-1 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-            </svg>
           </div>
-          <div>
-            <h1 class="text-4xl font-bold text-foreground">Kyc-Pro</h1>
-            <p class="text-sm text-green-600 font-medium">Enterprise KYC Platform</p>
-          </div>
-        </div>
-        <h2 class="text-2xl font-semibold text-foreground mb-2">Platform User Signup</h2>
-        <p class="text-muted-foreground text-base">Create your platform user account</p>
-      </div>
-
-      <!-- Signup Card -->
-      <div class="bg-card/80 backdrop-blur-xl border border-border shadow-2xl rounded-lg">
-        <div class="p-6 space-y-3 pb-6">
-          <h2 class="text-2xl text-foreground text-center font-semibold">Create Account</h2>
-          <p class="text-muted-foreground text-center text-base">
+          <h2 class="text-2xl font-bold text-foreground">Create Platform User Account</h2>
+          <p class="text-muted-foreground">
             Join as a Platform User
           </p>
         </div>
-        <div class="px-6 pb-6 space-y-6">
-          <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="space-y-5">
+        <div class="px-6 pb-6">
+          <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
-              <div class="space-y-3">
-                <label class="text-foreground font-medium">First Name</label>
-                <div class="relative group">
-                  <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 group-focus-within:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                  </svg>
-                  <input
-                    formControlName="firstName"
-                    type="text"
-                    placeholder="Enter your first name"
-                    [class]="'w-full pl-12 h-12 bg-input-background border text-foreground placeholder:text-muted-foreground focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 ' + (firstName?.touched && firstName?.invalid ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-green-600/50')"
-                    required
-                  />
-                </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-foreground">First Name</label>
+                <input
+                  formControlName="firstName"
+                  type="text"
+                  placeholder="Enter your first name"
+                  class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2"
+                  required
+                />
                 <div *ngIf="firstName?.touched && firstName?.invalid" class="text-sm text-red-500">
                   {{ getErrorMessage(firstName, 'First name') }}
                 </div>
               </div>
               
-              <div class="space-y-3">
-                <label class="text-foreground font-medium">Last Name</label>
-                <div class="relative group">
-                  <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 group-focus-within:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                  </svg>
-                  <input
-                    formControlName="lastName"
-                    type="text"
-                    placeholder="Enter your last name"
-                    [class]="'w-full pl-12 h-12 bg-input-background border text-foreground placeholder:text-muted-foreground focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 ' + (lastName?.touched && lastName?.invalid ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-green-600/50')"
-                    required
-                  />
-                </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-foreground">Last Name</label>
+                <input
+                  formControlName="lastName"
+                  type="text"
+                  placeholder="Enter your last name"
+                  class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2"
+                  required
+                />
                 <div *ngIf="lastName?.touched && lastName?.invalid" class="text-sm text-red-500">
                   {{ getErrorMessage(lastName, 'Last name') }}
                 </div>
               </div>
             </div>
             
-            <div class="space-y-3">
-              <label class="text-foreground font-medium">Email Address</label>
-              <div class="relative group">
-                <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 group-focus-within:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-                <input
-                  formControlName="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  [class]="'w-full pl-12 h-12 bg-input-background border text-foreground placeholder:text-muted-foreground focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 ' + (email?.touched && email?.invalid ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-green-600/50')"
-                  required
-                />
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-foreground">Organization Name</label>
+              <input
+                formControlName="organizationName"
+                type="text"
+                placeholder="Enter your organization name"
+                class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2"
+                required
+              />
+              <div *ngIf="organizationName?.touched && organizationName?.invalid" class="text-sm text-red-500">
+                {{ getErrorMessage(organizationName, 'Organization name') }}
               </div>
+            </div>
+            
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-foreground">Email Address</label>
+              <input
+                formControlName="email"
+                type="email"
+                placeholder="Enter your email"
+                class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2"
+                required
+              />
               <div *ngIf="email?.touched && email?.invalid" class="text-sm text-red-500">
                 {{ getErrorMessage(email, 'Email') }}
               </div>
             </div>
 
-            <div class="space-y-3">
-              <label class="text-foreground font-medium">Password</label>
-              <div class="relative group">
-                <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 group-focus-within:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                </svg>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-foreground">Password</label>
+              <div class="relative">
                 <input
                   formControlName="password"
                   [type]="showPassword ? 'text' : 'password'"
                   placeholder="Create a strong password"
-                  [class]="'w-full pl-12 pr-12 h-12 bg-input-background border text-foreground placeholder:text-muted-foreground focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 ' + (password?.touched && password?.invalid ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-green-600/50')"
+                  class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 pr-10"
                   required
                 />
                 <button
                   type="button"
                   (click)="showPassword = !showPassword"
-                  class="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-green-600 transition-colors"
+                  class="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground"
                 >
-                  <svg *ngIf="!showPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg *ngIf="!showPassword" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                   </svg>
-                  <svg *ngIf="showPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg *ngIf="showPassword" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
                   </svg>
                 </button>
@@ -277,29 +158,26 @@
               </div>
             </div>
 
-            <div class="space-y-3">
-              <label class="text-foreground font-medium">Confirm Password</label>
-              <div class="relative group">
-                <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 group-focus-within:text-green-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                </svg>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-foreground">Confirm Password</label>
+              <div class="relative">
                 <input
                   formControlName="confirmPassword"
                   [type]="showConfirmPassword ? 'text' : 'password'"
                   placeholder="Confirm your password"
-                  [class]="'w-full pl-12 pr-12 h-12 bg-input-background border text-foreground placeholder:text-muted-foreground focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 ' + (confirmPassword?.touched && confirmPassword?.invalid ? 'border-red-500 focus:border-red-500' : 'border-border focus:border-green-600/50')"
+                  class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 pr-10"
                   required
                 />
                 <button
                   type="button"
                   (click)="showConfirmPassword = !showConfirmPassword"
-                  class="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-green-600 transition-colors"
+                  class="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground"
                 >
-                  <svg *ngIf="!showConfirmPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg *ngIf="!showConfirmPassword" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                   </svg>
-                  <svg *ngIf="showConfirmPassword" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg *ngIf="showConfirmPassword" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
                   </svg>
                 </button>
@@ -313,7 +191,7 @@
               <input 
                 type="checkbox" 
                 formControlName="agreeToTerms"
-                [class]="'rounded border-border bg-input-background mt-1 ' + (agreeToTerms?.touched && agreeToTerms?.invalid ? 'border-red-500' : '')" 
+                class="rounded border-border bg-input-background mt-1" 
                 required 
               />
               <label class="text-sm text-muted-foreground leading-relaxed">
@@ -326,18 +204,15 @@
             
             <button 
               type="submit" 
-              class="w-full h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full h-10 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               [disabled]="signupForm.invalid || isLoading"
             >
               <div *ngIf="isLoading" class="flex items-center space-x-2">
-                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                 <span>Creating account...</span>
               </div>
               <div *ngIf="!isLoading" class="flex items-center space-x-2">
                 <span>Create Platform User Account</span>
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                </svg>
               </div>
             </button>
           </form>
@@ -348,16 +223,6 @@
               ← Back to login
             </a>
           </div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="text-center mt-8">
-        <div class="inline-flex items-center rounded-full border border-border text-muted-foreground bg-card/50 backdrop-blur-sm border-green-400/30 px-3 py-1">
-          <svg class="h-3 w-3 mr-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-          </svg>
-          Platform User Access
         </div>
       </div>
     </div>

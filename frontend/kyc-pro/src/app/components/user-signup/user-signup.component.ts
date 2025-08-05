@@ -3,11 +3,12 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { AuthBackgroundSvgComponent } from '../auth-background-svg/auth-background-svg.component';
 
 @Component({
   selector: 'app-user-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, AuthBackgroundSvgComponent],
   templateUrl: './user-signup.component.html',
   styleUrls: ['./user-signup.component.css']
 })
@@ -56,6 +57,7 @@ export class UserSignupComponent {
     firstName: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z\s]+$/)]],
     lastName: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z\s]+$/)]],
     email: ['', [Validators.required, Validators.email]],
+    organizationName: ['', [Validators.required, Validators.minLength(2)]],
     password: ['', [Validators.required, Validators.minLength(8), this.passwordValidator]],
     confirmPassword: ['', [Validators.required, this.confirmPasswordValidator]],
     agreeToTerms: [false, Validators.requiredTrue]
@@ -65,6 +67,7 @@ export class UserSignupComponent {
   get firstName() { return this.signupForm.get('firstName'); }
   get lastName() { return this.signupForm.get('lastName'); }
   get email() { return this.signupForm.get('email'); }
+  get organizationName() { return this.signupForm.get('organizationName'); }
   get password() { return this.signupForm.get('password'); }
   get confirmPassword() { return this.signupForm.get('confirmPassword'); }
   get agreeToTerms() { return this.signupForm.get('agreeToTerms'); }
