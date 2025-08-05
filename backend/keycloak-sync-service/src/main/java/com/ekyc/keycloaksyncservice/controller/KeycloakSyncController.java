@@ -4,7 +4,8 @@ import com.ekyc.common.dto.SyncResponse;
 import com.ekyc.common.dto.UserSyncRequest;
 import com.ekyc.keycloaksyncservice.service.KeycloakSyncService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/keycloak-sync")
+@Slf4j
+@RequiredArgsConstructor
 public class KeycloakSyncController {
 
-    @Autowired
-    private KeycloakSyncService syncService;
+    private final KeycloakSyncService syncService;
 
     @PostMapping("/users/sync")
     public ResponseEntity<SyncResponse> syncUser(@Valid @RequestBody UserSyncRequest request) {

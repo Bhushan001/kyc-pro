@@ -4,6 +4,8 @@ import com.ekyc.moduleservice.dto.CreateModuleRequest;
 import com.ekyc.moduleservice.dto.ModuleDto;
 import com.ekyc.moduleservice.entity.Module;
 import com.ekyc.moduleservice.repository.ModuleRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +13,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class ModuleService {
 
   private final ModuleRepository repo;
-
-  public ModuleService(ModuleRepository repo) {
-    this.repo = repo;
-  }
 
   public List<ModuleDto> getActiveModules() {
     return repo.findByStatus("active").stream().map(this::toDto).collect(Collectors.toList());

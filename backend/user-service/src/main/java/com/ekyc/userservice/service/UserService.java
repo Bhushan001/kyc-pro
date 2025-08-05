@@ -4,6 +4,8 @@ import com.ekyc.userservice.dto.CreateUserRequest;
 import com.ekyc.userservice.dto.UserDto;
 import com.ekyc.userservice.entity.User;
 import com.ekyc.userservice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,12 @@ import java.util.stream.Collectors;
  * For cross-system operations (Database + Keycloak), use UnifiedUserService
  */
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     /**
      * Get all users for a specific tenant (internal user-service operation)

@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.UUID;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class KeycloakAuthService {
-    
-    private static final Logger logger = LoggerFactory.getLogger(KeycloakAuthService.class);
     
     private final RestTemplate restTemplate;
     
@@ -33,13 +33,11 @@ public class KeycloakAuthService {
     @Value("${keycloak.credentials.secret:emT3O4n4T5sfjuxM1cScYM8RS6bZZoE7}")
     private String clientSecret;
     
-    public KeycloakAuthService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+
     
     public AuthResponse authenticateWithKeycloak(String email, String password) {
         try {
-            logger.info("Authenticating user with Keycloak: {}", email);
+            log.info("Authenticating user with Keycloak: {}", email);
             
             String tokenUrl = keycloakUrl + "/realms/" + realm + "/protocol/openid-connect/token";
             
@@ -62,21 +60,21 @@ public class KeycloakAuthService {
                 String refreshToken = (String) response.getBody().get("refresh_token");
                 
                 if (accessToken != null) {
-                    logger.info("Keycloak authentication successful for user: {}", email);
+                    log.info("Keycloak authentication successful for user: {}", email);
                     
                     // Get user info from Keycloak
                     UserSyncRequest userInfo = getUserInfoFromKeycloak(accessToken);
                     
                     // Create AuthResponse with Keycloak token
-                    AuthResponse authResponse = new AuthResponse(
-                        accessToken, // Use Keycloak token instead of JWT
-                        userInfo.getUserId(),
-                        userInfo.getEmail(),
-                        userInfo.getFirstName(),
-                        userInfo.getLastName(),
-                        userInfo.getRole(),
-                        userInfo.getTenantId()
-                    );
+                    AuthResponse authResponse = AuthResponse.builder()
+                        .token(accessToken) // Use Keycloak token instead of JWT
+                        .userId(userInfo.getUserId())
+                        .email(userInfo.getEmail())
+                        .firstname(userInfo.getFirstName())
+                        .lastname(userInfo.getLastName())
+                        .role(userInfo.getRole())
+                        .tenantId(userInfo.getTenantId())
+                        .build();
                     
                     // Set additional profile information
                     authResponse.setKeycloakId(userInfo.getKeycloakId());
@@ -89,11 +87,11 @@ public class KeycloakAuthService {
                 }
             }
             
-            logger.error("Keycloak authentication failed for user: {}", email);
+            log.error("Keycloak authentication failed for user: {}", email);
             throw new RuntimeException("Invalid credentials");
             
         } catch (Exception e) {
-            logger.error("Error authenticating with Keycloak for user {}: {}", email, e.getMessage(), e);
+            log.error("Error authenticating with Keycloak for user {}: {}", email, e.getMessage(), e);
             throw new RuntimeException("Authentication failed: " + e.getMessage());
         }
     }
@@ -128,7 +126,7 @@ public class KeycloakAuthService {
             throw new RuntimeException("Failed to get user info from Keycloak");
             
         } catch (Exception e) {
-            logger.error("Error getting user info from Keycloak: {}", e.getMessage(), e);
+            log.error("Error getting user info from Keycloak: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to get user info: " + e.getMessage());
         }
     }

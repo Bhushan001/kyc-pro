@@ -1,0 +1,477 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <button (click)="handleClose()" class="text-muted-foreground hover:text-foreground p-2 rounded-md">
+        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to Overview
+      </button>
+      <div>
+        <h1 class="text-3xl font-bold text-foreground">Create New Tenant</h1>
+        <p class="text-muted-foreground">Configure a new organization on the platform</p>
+      </div>
+    </div>
+    
+    <!-- Fill Sample Data Button -->
+    <button 
+      (click)="fillAllSampleData()"
+      class="border border-purple-300 text-purple-700 hover:bg-purple-50 rounded-md px-4 py-2 text-sm font-medium inline-flex items-center"
+    >
+      <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+      </svg>
+      Fill All Sample Data
+    </button>
+  </div>
+
+  <!-- Stepper Navigation -->
+  <div class="bg-card border border-border rounded-xl">
+    <div class="p-6">
+      <!-- Progress Bar -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-medium text-foreground">Progress</span>
+          <span class="text-sm text-muted-foreground">{{ getProgressPercentage() }}% Complete</span>
+        </div>
+        <div class="w-full bg-border rounded-full h-2">
+          <div class="bg-green-600 h-2 rounded-full transition-all duration-300" 
+               [style.width]="getProgressPercentage() + '%'"></div>
+        </div>
+      </div>
+      
+      <div class="flex items-center justify-between">
+        <div *ngFor="let step of steps; let i = index" class="flex items-center space-x-2">
+          <div class="flex items-center space-x-3" [class]="i < steps.length - 1 ? 'flex-1' : ''">
+            <div class="h-10 w-10 rounded-full flex items-center justify-center border-2 transition-colors cursor-pointer" 
+                 [class]="currentStep === step.number 
+                   ? 'bg-blue-600 border-blue-600 text-white' 
+                   : isStepComplete(step.number) || currentStep > step.number
+                     ? 'bg-green-600 border-green-600 text-white'
+                     : isStepAccessible(step.number)
+                       ? 'border-blue-300 text-blue-600 hover:bg-blue-50'
+                       : 'border-border text-muted-foreground'"
+                 (click)="navigateToStep(step.number)">
+              <!-- Check icon for completed steps -->
+              <svg *ngIf="isStepComplete(step.number) && currentStep > step.number" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <!-- Step-specific icons -->
+              <svg *ngIf="!(isStepComplete(step.number) && currentStep > step.number) && step.number === 1" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+              <svg *ngIf="!(isStepComplete(step.number) && currentStep > step.number) && step.number === 2" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <svg *ngIf="!(isStepComplete(step.number) && currentStep > step.number) && step.number === 3" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+              <svg *ngIf="!(isStepComplete(step.number) && currentStep > step.number) && step.number === 4" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+              </svg>
+            </div>
+            <div class="text-sm cursor-pointer" (click)="navigateToStep(step.number)">
+              <p class="font-medium" [class]="currentStep === step.number ? 'text-foreground' : 'text-muted-foreground'">
+                {{ step.title }}
+              </p>
+              <p class="text-xs text-muted-foreground">Step {{ step.number }}</p>
+            </div>
+          </div>
+          <div *ngIf="i < steps.length - 1" class="h-0.5 flex-1 mx-4" 
+               [class]="currentStep > step.number ? 'bg-green-600' : 'bg-border'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step Content -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+      <form [formGroup]="tenantForm">
+        <!-- Step 1: Basic Information -->
+        <div *ngIf="currentStep === 1" class="bg-card border border-border rounded-xl">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-semibold text-foreground">Basic Information</h3>
+                <p class="text-muted-foreground">Enter the basic details for the new tenant organization</p>
+              </div>
+              <button 
+                (click)="fillSampleDataStep1()"
+                class="border border-purple-300 text-purple-700 hover:bg-purple-50 rounded-md px-3 py-1 text-xs font-medium inline-flex items-center"
+              >
+                <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+                </svg>
+                Fill Sample Data
+              </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Organization Name *</label>
+                <input type="text" formControlName="name" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="Enter organization name">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Organization Type *</label>
+                <select formControlName="type" 
+                        class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground">
+                  <option value="">Select type</option>
+                  <option value="Enterprise">Enterprise</option>
+                  <option value="Professional">Professional</option>
+                  <option value="Standard">Standard</option>
+                  <option value="Starter">Starter</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Industry *</label>
+                <select formControlName="industry" 
+                        class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground">
+                  <option value="">Select industry</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Healthcare">Healthcare</option>
+                  <option value="Legal">Legal</option>
+                  <option value="Retail">Retail</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Country *</label>
+                <select formControlName="country" 
+                        class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground">
+                  <option value="">Select country</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Contact Email *</label>
+                <input type="email" formControlName="contactEmail" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="admin@company.com">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Contact Phone</label>
+                <input type="tel" formControlName="contactPhone" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="+1 (555) 123-4567">
+              </div>
+              
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-foreground mb-2">Website</label>
+                <input type="url" formControlName="website" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="https://company.com">
+              </div>
+              
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-foreground mb-2">Description</label>
+                <textarea formControlName="description" rows="3"
+                          class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                          placeholder="Brief description of the organization"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Application Selection -->
+        <div *ngIf="currentStep === 2" class="bg-card border border-border rounded-xl">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-semibold text-foreground">Application Selection</h3>
+                <p class="text-muted-foreground">Choose the applications your tenant will have access to</p>
+              </div>
+              <button 
+                (click)="fillSampleDataStep2()"
+                class="border border-purple-300 text-purple-700 hover:bg-purple-50 rounded-md px-3 py-1 text-xs font-medium inline-flex items-center"
+              >
+                <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+                </svg>
+                Fill Sample Data
+              </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div *ngFor="let app of applications" 
+                   class="border border-border rounded-lg p-4 cursor-pointer transition-colors"
+                   [class]="(tenantForm.get('selectedApplications')?.value || []).includes(app.id) 
+                     ? 'border-blue-500 bg-blue-50' : 'hover:border-border/50'"
+                   (click)="handleApplicationToggle(app.id)">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
+                      <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 class="font-medium text-foreground">{{ app.name }}</h4>
+                      <p class="text-sm text-muted-foreground">${{ app.monthlyPrice }}/month</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span *ngIf="app.isHighlighted" class="inline-flex items-center justify-center rounded-md bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
+                      Popular
+                    </span>
+                    <div class="h-4 w-4 rounded border-2 border-border flex items-center justify-center"
+                         [class]="(tenantForm.get('selectedApplications')?.value || []).includes(app.id) 
+                           ? 'bg-blue-600 border-blue-600' : ''">
+                      <svg *ngIf="(tenantForm.get('selectedApplications')?.value || []).includes(app.id)" 
+                           class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-sm text-muted-foreground mb-3">{{ app.description }}</p>
+                <div class="space-y-1">
+                  <p class="text-xs font-medium text-foreground">Features:</p>
+                  <ul class="text-xs text-muted-foreground space-y-1">
+                    <li *ngFor="let feature of app.features" class="flex items-center">
+                      <svg class="h-3 w-3 mr-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      {{ feature }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configuration -->
+        <div *ngIf="currentStep === 3" class="bg-card border border-border rounded-xl">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-semibold text-foreground">Configuration</h3>
+                <p class="text-muted-foreground">Configure tenant settings and limits</p>
+              </div>
+              <button 
+                (click)="fillSampleDataStep3()"
+                class="border border-purple-300 text-purple-700 hover:bg-purple-50 rounded-md px-3 py-1 text-xs font-medium inline-flex items-center"
+              >
+                <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+                </svg>
+                Fill Sample Data
+              </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">User Limit *</label>
+                <input type="number" formControlName="userLimit" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="500">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Data Retention *</label>
+                <select formControlName="dataRetention" 
+                        class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground">
+                  <option value="">Select retention period</option>
+                  <option value="1 year">1 year</option>
+                  <option value="3 years">3 years</option>
+                  <option value="5 years">5 years</option>
+                  <option value="7 years">7 years</option>
+                  <option value="10 years">10 years</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Compliance Level *</label>
+                <select formControlName="complianceLevel" 
+                        class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground">
+                  <option value="">Select compliance level</option>
+                  <option value="Basic">Basic</option>
+                  <option value="SOC 2 Type I">SOC 2 Type I</option>
+                  <option value="SOC 2 Type II">SOC 2 Type II</option>
+                  <option value="GDPR">GDPR</option>
+                  <option value="HIPAA">HIPAA</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Custom Domain</label>
+                <input type="text" formControlName="customDomain" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="company.kycpro.com">
+              </div>
+              
+              <div class="md:col-span-2">
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" formControlName="ssoEnabled" 
+                         class="h-4 w-4 text-blue-600 border-border rounded">
+                  <span class="text-sm font-medium text-foreground">Enable Single Sign-On (SSO)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Billing -->
+        <div *ngIf="currentStep === 4" class="bg-card border border-border rounded-xl">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-semibold text-foreground">Billing Information</h3>
+                <p class="text-muted-foreground">Set up billing and payment details</p>
+              </div>
+              <button 
+                (click)="fillSampleDataStep4()"
+                class="border border-purple-300 text-purple-700 hover:bg-purple-50 rounded-md px-3 py-1 text-xs font-medium inline-flex items-center"
+              >
+                <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+                </svg>
+                Fill Sample Data
+              </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Billing Contact *</label>
+                <input type="email" formControlName="billingContact" 
+                       class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                       placeholder="finance@company.com">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-foreground mb-2">Payment Method *</label>
+                <select formControlName="paymentMethod" 
+                        class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground">
+                  <option value="">Select payment method</option>
+                  <option value="Credit Card">Credit Card</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Invoice">Invoice</option>
+                </select>
+              </div>
+              
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-foreground mb-2">Billing Address *</label>
+                <textarea formControlName="billingAddress" rows="3"
+                          class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                          placeholder="Enter complete billing address"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Summary Sidebar -->
+    <div class="lg:col-span-1">
+      <div class="space-y-4">
+        <!-- Progress Card -->
+        <div class="bg-card border border-border rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-foreground mb-4">Progress</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-muted-foreground">Step {{ currentStep }} of 4</span>
+              <span class="text-foreground">{{ getProgressPercentage() }}%</span>
+            </div>
+            <div class="w-full bg-border rounded-full h-2">
+              <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                   [style.width]="getProgressPercentage() + '%'"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Development Mode Card -->
+        <div class="bg-purple-50 border border-purple-200 rounded-xl p-6">
+          <h3 class="text-purple-900 text-sm font-semibold mb-4">Development Mode</h3>
+          <div class="space-y-2">
+            <p class="text-xs text-purple-700">
+              Use the "Fill Sample Data" buttons to quickly populate forms with realistic test data for ICICI Bank.
+            </p>
+            <div class="flex items-center space-x-1">
+              <svg class="h-3 w-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"></path>
+              </svg>
+              <span class="text-xs text-purple-600">Sample data available</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Card -->
+        <div class="bg-card border border-border rounded-xl p-6 sticky top-6">
+          <h3 class="text-lg font-semibold text-foreground mb-4">Summary</h3>
+        
+        <div class="space-y-4">
+          <div *ngIf="tenantForm.get('name')?.value">
+            <p class="text-sm font-medium text-foreground">Organization</p>
+            <p class="text-sm text-muted-foreground">{{ tenantForm.get('name')?.value }}</p>
+          </div>
+          
+          <div *ngIf="(tenantForm.get('selectedApplications')?.value || []).length > 0">
+            <p class="text-sm font-medium text-foreground">Selected Applications</p>
+            <div class="space-y-1">
+                             <div *ngFor="let appId of tenantForm.get('selectedApplications')?.value" class="flex items-center justify-between">
+                 <span class="text-sm text-muted-foreground">
+                   {{ getApplicationName(appId) }}
+                 </span>
+                 <span class="text-sm font-medium">
+                   ${{ getApplicationPrice(appId) }}/month
+                 </span>
+               </div>
+            </div>
+          </div>
+          
+          <div *ngIf="getTotalMonthlyCost() > 0" class="border-t pt-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-foreground">Total Monthly Cost</span>
+              <span class="text-lg font-bold text-foreground">${{ getTotalMonthlyCost() }}/month</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <div class="flex space-x-3 mt-6">
+          <button *ngIf="currentStep > 1" 
+                  (click)="handlePrevious()"
+                  class="flex-1 px-4 py-2 border border-border bg-background text-foreground rounded-md hover:bg-accent">
+            Previous
+          </button>
+          
+          <button *ngIf="currentStep < 4" 
+                  (click)="handleNext()"
+                  [disabled]="!isStepComplete(currentStep)"
+                  class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+          </button>
+          
+          <button *ngIf="currentStep === 4" 
+                  (click)="handleComplete()"
+                  [disabled]="!tenantForm.valid || isLoading"
+                  class="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            {{ isLoading ? 'Creating...' : 'Create Tenant' }}
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div> 

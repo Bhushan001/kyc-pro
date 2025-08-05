@@ -1,0 +1,127 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+  <!-- Background SVG -->
+  <div class="absolute inset-0 opacity-30">
+    <app-auth-background-svg></app-auth-background-svg>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 min-h-screen flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-md">
+      <!-- Back to home link -->
+      <a routerLink="/" class="inline-flex items-center text-muted-foreground hover:text-foreground mb-8">
+        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to home
+      </a>
+
+      <div class="bg-card border border-border shadow-lg rounded-lg">
+        <div class="p-6 text-center">
+          <div class="flex items-center justify-center mb-4">
+            <svg class="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-foreground">Welcome to Kyc-Pro Workspace</h2>
+          <p class="text-muted-foreground">
+            User Workspace Dashboard
+          </p>
+        </div>
+        <div class="px-6 pb-6">
+          <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit()" class="space-y-4">
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-foreground">
+                Email Address
+              </label>
+              <input
+                formControlName="email"
+                type="email"
+                placeholder="Enter your email"
+                class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2"
+                required
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-foreground">
+                Password
+              </label>
+              <div class="relative">
+                <input
+                  formControlName="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  placeholder="Enter your password"
+                  class="w-full h-10 bg-input-background border border-border text-foreground placeholder:text-muted-foreground focus:border-green-600/50 focus:ring-green-600/25 transition-all duration-200 rounded-md px-3 py-2 pr-10"
+                  required
+                />
+                <button
+                  type="button"
+                  (click)="showPassword = !showPassword"
+                  class="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground"
+                >
+                  <svg *ngIf="!showPassword" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  <svg *ngIf="showPassword" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full h-10 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              [disabled]="loginForm.invalid || isLoading"
+            >
+              <div *ngIf="isLoading" class="flex items-center space-x-2">
+                <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                <span>Signing in...</span>
+              </div>
+              <div *ngIf="!isLoading" class="flex items-center space-x-2">
+                <span>Sign In</span>
+              </div>
+            </button>
+          </form>
+
+          <!-- Demo Login Section -->
+          <div class="mt-8 pt-6 border-t border-border">
+            <p class="text-sm text-muted-foreground text-center mb-4">
+              Quick Demo Access
+            </p>
+            <button
+              type="button"
+              class="w-full justify-start inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border bg-background text-muted-foreground hover:bg-muted h-10 px-4 py-2"
+              (click)="handleDemoLogin()"
+              [disabled]="isLoading"
+            >
+              <svg class="mr-2 h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+              Platform User - Workspace Dashboard
+            </button>
+          </div>
+
+          <!-- Test Credentials -->
+          <div class="mt-6 p-4 bg-muted/30 rounded-lg">
+            <p class="text-sm font-medium text-foreground mb-2">Test Credentials:</p>
+            <div class="space-y-1 text-xs text-muted-foreground">
+              <p><strong>Platform User:</strong> user1&#64;icici.com</p>
+              <p class="mt-2 text-green-600">Any password works for demo</p>
+            </div>
+          </div>
+
+          <div class="mt-6 text-center">
+            <p class="text-sm text-muted-foreground">
+              Don't have an account? 
+              <a routerLink="/signup" class="text-green-600 hover:underline">
+                Sign up as Platform User
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -9,6 +9,8 @@ com/ekyc/userservice/service/impl/UserSyncServiceImpl.class
 com/ekyc/userservice/dto/UserDto.class
 com/ekyc/userservice/entity/User.class
 com/ekyc/userservice/config/SecurityConfig.class
+com/ekyc/userservice/entity/User$UserBuilder.class
+com/ekyc/userservice/dto/CreateUserRequest$CreateUserRequestBuilder.class
 com/ekyc/userservice/dto/CreateUserRequest.class
 com/ekyc/userservice/service/impl/KeycloakUserServiceImpl.class
 com/ekyc/userservice/controller/UserController.class

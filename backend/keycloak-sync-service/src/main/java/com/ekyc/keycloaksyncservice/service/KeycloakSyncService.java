@@ -2,11 +2,12 @@ package com.ekyc.keycloaksyncservice.service;
 
 import com.ekyc.common.dto.SyncResponse;
 import com.ekyc.common.dto.UserSyncRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,11 @@ import java.util.*;
 import java.util.ArrayList;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class KeycloakSyncService {
 
-    @Autowired
-    private Keycloak keycloak;
+    private final Keycloak keycloak;
 
     @Value("${keycloak.realm}")
     private String realm;

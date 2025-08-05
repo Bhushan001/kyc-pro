@@ -1,5 +1,7 @@
-com/ekyc/tenantservice/TenantServiceApplication.class
+com/ekyc/tenantservice/dto/CreateTenantRequest$CreateTenantRequestBuilder.class
 com/ekyc/tenantservice/entity/Tenant.class
+com/ekyc/tenantservice/entity/Tenant$TenantBuilder.class
+com/ekyc/tenantservice/TenantServiceApplication.class
 com/ekyc/tenantservice/service/TenantService.class
 com/ekyc/tenantservice/repository/TenantRepository.class
 com/ekyc/tenantservice/controller/TenantController.class

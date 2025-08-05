@@ -166,22 +166,22 @@ export class LandingComponent {
   ];
 
   handleDemoLogin(user: DemoUser) {
-    // For now, just log the user data
-    // In a real implementation, this would navigate to the appropriate portal
-    console.log('Demo login for user:', user);
-    
-    // You could implement actual demo login logic here
-    // For example, navigate to the appropriate portal with demo data
+    // Navigate to the appropriate portal based on user role
     switch (user.role) {
       case 'platform_admin':
-        // Navigate to hub portal
+        // Navigate to hub portal (Console - Platform Admin)
+        window.open('http://localhost:4201/dashboard', '_blank');
         break;
       case 'platform_tenant_admin':
-        // Navigate to console portal
+        // Navigate to console portal (Console - Tenant Admin)
+        window.open('http://localhost:4201/dashboard', '_blank');
         break;
       case 'platform_user':
-        // Navigate to workspace portal
+        // Navigate to workspace portal (Workspace - Platform User)
+        window.open('http://localhost:4203/dashboard', '_blank');
         break;
+      default:
+        console.log('Unknown role:', user.role);
     }
   }
 } 

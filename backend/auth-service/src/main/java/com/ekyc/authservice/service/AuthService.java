@@ -7,34 +7,27 @@ import com.ekyc.authservice.entity.User;
 import com.ekyc.authservice.repository.UserRepository;
 import com.ekyc.authservice.util.JwtUtil;
 import com.ekyc.common.dto.UserSyncRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class AuthService {
   private final UserRepository repo;
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
   private final UserServiceClient userServiceClient;
   private final KeycloakAuthService keycloakAuthService;
-  private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
-
-  public AuthService(UserRepository repo, PasswordEncoder enc, JwtUtil jwt, UserServiceClient userServiceClient, KeycloakAuthService keycloakAuthService) {
-    this.repo = repo;
-    this.passwordEncoder = enc;
-    this.jwtUtil = jwt;
-    this.userServiceClient = userServiceClient;
-    this.keycloakAuthService = keycloakAuthService;
-  }
 
   public AuthResponse login(LoginRequest req) {
     try {
-      logger.info("Login attempt for email: {}", req.getEmail());
+      log.info("Login attempt for email: {}", req.getEmail());
       
       // First try user service authentication
       try {
@@ -43,17 +36,17 @@ public class AuthService {
           UserSyncRequest userSyncRequest = userServiceClient.findUserByEmail(req.getEmail());
           if (userSyncRequest != null) {
             String token = jwtUtil.generateToken(userSyncRequest);
-            logger.info("Login successful via user service for user: {}", req.getEmail());
+            log.info("Login successful via user service for user: {}", req.getEmail());
             
-            AuthResponse response = new AuthResponse(
-              token, 
-              userSyncRequest.getUserId(), 
-              userSyncRequest.getEmail(), 
-              userSyncRequest.getFirstName(), 
-              userSyncRequest.getLastName(), 
-              userSyncRequest.getRole(), 
-              userSyncRequest.getTenantId()
-            );
+            AuthResponse response = AuthResponse.builder()
+              .token(token)
+              .userId(userSyncRequest.getUserId())
+              .email(userSyncRequest.getEmail())
+              .firstname(userSyncRequest.getFirstName())
+              .lastname(userSyncRequest.getLastName())
+              .role(userSyncRequest.getRole())
+              .tenantId(userSyncRequest.getTenantId())
+              .build();
             
             // Set additional user profile information
             response.setKeycloakId(userSyncRequest.getKeycloakId());
@@ -62,7 +55,7 @@ public class AuthService {
             response.setCountry(userSyncRequest.getCountry());
             response.setPhone(userSyncRequest.getPhone());
             
-            logger.info("AuthResponse created via user service: token={}, userId={}, email={}, role={}", 
+            log.info("AuthResponse created via user service: token={}, userId={}, email={}, role={}", 
               token != null ? "present" : "null", 
               userSyncRequest.getUserId(), 
               userSyncRequest.getEmail(), 
@@ -72,40 +65,40 @@ public class AuthService {
           }
         }
       } catch (Exception e) {
-        logger.warn("User service authentication failed, trying Keycloak: {}", e.getMessage());
+        log.warn("User service authentication failed, trying Keycloak: {}", e.getMessage());
       }
       
       // Fallback to Keycloak authentication
-      logger.info("Trying Keycloak authentication for user: {}", req.getEmail());
+      log.info("Trying Keycloak authentication for user: {}", req.getEmail());
       AuthResponse keycloakResponse = keycloakAuthService.authenticateWithKeycloak(req.getEmail(), req.getPassword());
-      logger.info("Login successful via Keycloak for user: {}", req.getEmail());
+      log.info("Login successful via Keycloak for user: {}", req.getEmail());
       return keycloakResponse;
       
     } catch (Exception e) {
-      logger.error("Login error for email {}: {}", req.getEmail(), e.getMessage(), e);
+      log.error("Login error for email {}: {}", req.getEmail(), e.getMessage(), e);
       throw new RuntimeException("Login failed: " + e.getMessage());
     }
   }
   
   public AuthResponse getUserProfile(String email) {
     try {
-      logger.info("Getting user profile for email: {}", email);
+      log.info("Getting user profile for email: {}", email);
       
       // Get user details from user service
       UserSyncRequest userSyncRequest = userServiceClient.findUserByEmail(email);
       if (userSyncRequest != null) {
         String token = jwtUtil.generateToken(userSyncRequest);
-        logger.info("Profile retrieved successfully for user: {}", email);
+        log.info("Profile retrieved successfully for user: {}", email);
         
-        AuthResponse response = new AuthResponse(
-          token, 
-          userSyncRequest.getUserId(), 
-          userSyncRequest.getEmail(), 
-          userSyncRequest.getFirstName(), 
-          userSyncRequest.getLastName(), 
-          userSyncRequest.getRole(), 
-          userSyncRequest.getTenantId()
-        );
+        AuthResponse response = AuthResponse.builder()
+          .token(token)
+          .userId(userSyncRequest.getUserId())
+          .email(userSyncRequest.getEmail())
+          .firstname(userSyncRequest.getFirstName())
+          .lastname(userSyncRequest.getLastName())
+          .role(userSyncRequest.getRole())
+          .tenantId(userSyncRequest.getTenantId())
+          .build();
         
         // Set additional user profile information
         response.setKeycloakId(userSyncRequest.getKeycloakId());
@@ -116,12 +109,12 @@ public class AuthService {
         
         return response;
       } else {
-        logger.error("User not found for email: {}", email);
+        log.error("User not found for email: {}", email);
         throw new RuntimeException("User not found");
       }
       
     } catch (Exception e) {
-      logger.error("Error getting user profile for email {}: {}", email, e.getMessage(), e);
+      log.error("Error getting user profile for email {}: {}", email, e.getMessage(), e);
       throw new RuntimeException("Failed to get user profile: " + e.getMessage());
     }
   }
@@ -158,15 +151,21 @@ public class AuthService {
       UserSyncRequest createdUser = userServiceClient.createUser(userSyncRequest);
       
       if (createdUser != null) {
-        logger.info("User successfully created via user service: {}", req.getEmail());
+        log.info("User successfully created via user service: {}", req.getEmail());
         
         // Note: We don't create a local copy in auth-service anymore since user-service handles database storage
         // The user-service is the authoritative source for user data
         
         String token = jwtUtil.generateToken(createdUser);
-        AuthResponse response = new AuthResponse(token, createdUser.getUserId(), createdUser.getEmail(), 
-                              createdUser.getFirstName(), createdUser.getLastName(), 
-                              createdUser.getRole(), createdUser.getTenantId());
+        AuthResponse response = AuthResponse.builder()
+          .token(token)
+          .userId(createdUser.getUserId())
+          .email(createdUser.getEmail())
+          .firstname(createdUser.getFirstName())
+          .lastname(createdUser.getLastName())
+          .role(createdUser.getRole())
+          .tenantId(createdUser.getTenantId())
+          .build();
         
         // Set additional user profile information
         response.setKeycloakId(createdUser.getKeycloakId());
@@ -181,7 +180,7 @@ public class AuthService {
       }
       
     } catch (Exception e) {
-      logger.error("Error creating user via user service: {}", e.getMessage(), e);
+      log.error("Error creating user via user service: {}", e.getMessage(), e);
       throw new RuntimeException("Failed to create user: " + e.getMessage());
     }
   }

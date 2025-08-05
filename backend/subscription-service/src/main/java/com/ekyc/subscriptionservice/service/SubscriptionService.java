@@ -4,6 +4,8 @@ import com.ekyc.subscriptionservice.dto.CreateSubscriptionRequest;
 import com.ekyc.subscriptionservice.dto.SubscriptionDto;
 import com.ekyc.subscriptionservice.entity.Subscription;
 import com.ekyc.subscriptionservice.repository.SubscriptionRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +13,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class SubscriptionService {
 
   private final SubscriptionRepository repo;
-
-  public SubscriptionService(SubscriptionRepository repo) {
-    this.repo = repo;
-  }
 
   public List<SubscriptionDto> getByTenantId(UUID tenantId) {
     return repo.findByTenantId(tenantId).stream().map(this::toDto).collect(Collectors.toList());

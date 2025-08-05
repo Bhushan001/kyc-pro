@@ -4,6 +4,8 @@ import com.ekyc.subscriptionservice.dto.CreateSubscriptionRequest;
 import com.ekyc.subscriptionservice.dto.SubscriptionDto;
 import com.ekyc.subscriptionservice.service.SubscriptionService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +14,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/subscriptions")
+@Slf4j
+@RequiredArgsConstructor
 public class SubscriptionController {
   private final SubscriptionService service;
-  public SubscriptionController(SubscriptionService service) { this.service = service; }
 
   @PostMapping
   public ResponseEntity<SubscriptionDto> createSubscription(@Valid @RequestBody CreateSubscriptionRequest req) {

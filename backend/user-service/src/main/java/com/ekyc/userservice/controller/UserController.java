@@ -4,6 +4,8 @@ import com.ekyc.userservice.dto.CreateUserRequest;
 import com.ekyc.userservice.dto.UserDto;
 import com.ekyc.userservice.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +14,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@Slf4j
+@RequiredArgsConstructor
 public class UserController {
   private final UserService service;
-  public UserController(UserService service) { this.service = service; }
 
   @PostMapping
   public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest req) {

@@ -1,0 +1,382 @@
+<div class="min-h-screen bg-background">
+  <!-- Tenant Creation Stepper -->
+  <div *ngIf="showTenantCreation" class="p-6">
+    <app-tenant-creation-stepper 
+      (onClose)="handleCloseTenantCreation()"
+      (onComplete)="handleTenantCreationComplete($event)">
+    </app-tenant-creation-stepper>
+  </div>
+
+  <!-- Main Dashboard Content -->
+  <div *ngIf="!showTenantCreation">
+    <!-- Header -->
+    <header class="bg-card border-b border-border px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2">
+            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <span class="text-2xl font-bold text-foreground">Kyc-Pro Hub</span>
+          </div>
+          <span class="inline-flex items-center justify-center rounded-md border border-blue-600 px-2 py-0.5 text-xs font-medium text-blue-600">Platform Admin</span>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input 
+              placeholder="Search tenants, users..." 
+              class="pl-10 w-64 bg-input-background border border-border text-foreground rounded-md px-3 py-1 h-9"
+            />
+          </div>
+          <button class="text-muted-foreground hover:text-foreground p-2 rounded-md">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.5 19.5h15a2 2 0 002-2v-11a2 2 0 00-2-2h-15a2 2 0 00-2 2v11a2 2 0 002 2z"></path>
+            </svg>
+          </button>
+          <div class="flex items-center space-x-2">
+            <span class="text-muted-foreground">Welcome, Platform Admin</span>
+            <button (click)="logout()" class="border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-1 text-sm">
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex">
+      <!-- Sidebar -->
+      <nav class="w-64 bg-card min-h-screen p-6 border-r border-border">
+        <div class="space-y-2">
+          <button 
+            [class]="activeTab === 'overview' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'hover:bg-accent hover:text-accent-foreground'"
+            class="w-full justify-start inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2"
+            (click)="setActiveTab('overview')"
+          >
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Overview
+          </button>
+          <button 
+            [class]="activeTab === 'tenants' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'hover:bg-accent hover:text-accent-foreground'"
+            class="w-full justify-start inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2"
+            (click)="setActiveTab('tenants')"
+          >
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+            Tenants
+          </button>
+          <button 
+            [class]="activeTab === 'users' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'hover:bg-accent hover:text-accent-foreground'"
+            class="w-full justify-start inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2"
+            (click)="setActiveTab('users')"
+          >
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+            </svg>
+            Users
+          </button>
+          <button 
+            [class]="activeTab === 'analytics' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'hover:bg-accent hover:text-accent-foreground'"
+            class="w-full justify-start inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2"
+            (click)="setActiveTab('analytics')"
+          >
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+            Analytics
+          </button>
+          <button 
+            [class]="activeTab === 'settings' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'hover:bg-accent hover:text-accent-foreground'"
+            class="w-full justify-start inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2"
+            (click)="setActiveTab('settings')"
+          >
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            Settings
+          </button>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6">
+      <!-- Overview Tab -->
+      <div *ngIf="activeTab === 'overview'" class="space-y-6">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-bold text-foreground">Platform Overview</h1>
+          <button (click)="handleAddTenant()" class="bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2">
+            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Add Tenant
+          </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+            <div class="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
+              <h4 class="text-sm font-medium text-muted-foreground">Total Tenants</h4>
+              <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            </div>
+            <div class="px-6 pb-6">
+              <div class="text-2xl font-bold text-foreground">
+                <span *ngIf="loadingTenants" class="text-muted-foreground">Loading...</span>
+                <span *ngIf="!loadingTenants">{{ stats.totalTenants }}</span>
+              </div>
+              <p class="text-xs text-green-600">+12% from last month</p>
+            </div>
+          </div>
+
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+            <div class="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
+              <h4 class="text-sm font-medium text-muted-foreground">Total Users</h4>
+              <svg class="h-4 w-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+              </svg>
+            </div>
+            <div class="px-6 pb-6">
+              <div class="text-2xl font-bold text-foreground">
+                <span *ngIf="loadingUsers" class="text-muted-foreground">Loading...</span>
+                <span *ngIf="!loadingUsers">{{ stats.totalUsers.toLocaleString() }}</span>
+              </div>
+              <p class="text-xs text-green-600">+18% from last month</p>
+            </div>
+          </div>
+
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+            <div class="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
+              <h4 class="text-sm font-medium text-muted-foreground">Monthly Revenue</h4>
+              <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            </div>
+            <div class="px-6 pb-6">
+              <div class="text-2xl font-bold text-foreground">${{ getTotalRevenue().toLocaleString() }}</div>
+              <p class="text-xs text-green-600">+24% from last month</p>
+            </div>
+          </div>
+
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+            <div class="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
+              <h4 class="text-sm font-medium text-muted-foreground">System Health</h4>
+              <svg class="h-4 w-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+            </div>
+            <div class="px-6 pb-6">
+              <div class="text-2xl font-bold text-foreground">{{ stats.systemHealth }}%</div>
+              <p class="text-xs text-green-600">All systems operational</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+            <div class="px-6 pt-6">
+              <h4 class="text-foreground">Recent Alerts</h4>
+              <p class="text-muted-foreground">System notifications and warnings</p>
+            </div>
+            <div class="px-6 pb-6 space-y-4">
+              <div *ngFor="let alert of alerts" class="flex items-center space-x-3 p-3 rounded-lg bg-muted/50">
+                <svg class="h-4 w-4" [class]="alert.type === 'error' ? 'text-red-600' : alert.type === 'warning' ? 'text-yellow-600' : 'text-blue-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+                <div class="flex-1">
+                  <p class="text-sm text-foreground">{{ alert.message }}</p>
+                  <p class="text-xs text-muted-foreground">{{ alert.time }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+            <div class="px-6 pt-6">
+              <h4 class="text-foreground">Top Tenants</h4>
+              <p class="text-muted-foreground">Most active organizations</p>
+            </div>
+            <div class="px-6 pb-6 space-y-4">
+              <div *ngFor="let tenant of getTopTenants()" class="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                <div>
+                  <p class="font-medium text-foreground">{{ tenant.name }}</p>
+                  <p class="text-sm text-muted-foreground">{{ tenant.users }} users • ${{ tenant.monthlyRevenue || 0 }}/month</p>
+                </div>
+                <span class="inline-flex items-center justify-center rounded-md border border-transparent px-2 py-0.5 text-xs font-medium" [class]="tenant.status === 'active' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'">
+                  {{ tenant.status }}
+                </span>
+              </div>
+              <div *ngIf="tenants.length === 0 && !loadingTenants" class="text-center py-4">
+                <p class="text-muted-foreground">No tenants yet</p>
+              </div>
+              <div *ngIf="loadingTenants" class="text-center py-4">
+                <p class="text-muted-foreground">Loading tenants...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tenants Tab -->
+      <div *ngIf="activeTab === 'tenants'" class="space-y-6">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-bold text-foreground">Tenant Management</h1>
+          <div class="flex space-x-2">
+            <button class="border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-1 text-sm inline-flex items-center gap-2">
+              <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z"></path>
+              </svg>
+              Filter
+            </button>
+            <button (click)="handleAddTenant()" class="bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2">
+              <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              Add Tenant
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+          <div class="px-6 pt-6">
+            <h4 class="text-foreground">All Tenants</h4>
+            <p class="text-muted-foreground">Manage your platform tenants</p>
+          </div>
+          <div class="px-6 pb-6">
+            <div class="space-y-4">
+              <div *ngFor="let tenant of tenants" class="flex items-center justify-between p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                <div class="flex items-center space-x-4">
+                  <div class="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
+                    <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="font-medium text-foreground">{{ tenant.name }}</h3>
+                    <p class="text-sm text-muted-foreground">{{ getTenantUserCount(tenant.id) }} users • {{ tenant.plan }} • {{ tenant.domain }}</p>
+                    <div class="flex flex-wrap gap-1 mt-1" *ngIf="getTenantSubscribedApplications(tenant.id).length > 0">
+                      <span *ngFor="let app of getTenantSubscribedApplications(tenant.id)" class="inline-flex items-center justify-center rounded-md border border-transparent bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+                        {{ app }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div class="text-right">
+                    <span class="inline-flex items-center justify-center rounded-md border border-transparent px-2 py-0.5 text-xs font-medium" [class]="tenant.status === 'active' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'">
+                      {{ tenant.status }}
+                    </span>
+                    <p class="text-xs text-muted-foreground mt-1">Revenue: ${{ getPlanPrice(tenant.plan) }}/month</p>
+                    <p class="text-xs text-muted-foreground">Admin: {{ getTenantAdminName(tenant.id) }}</p>
+                  </div>
+                  <button (click)="handleManageTenant(tenant)" class="text-muted-foreground hover:text-foreground p-2 rounded-md text-sm">
+                    Manage
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="tenants.length === 0 && !loadingTenants" class="text-center py-8">
+                <svg class="h-12 w-12 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+                <p class="text-muted-foreground">No tenants created yet</p>
+                <p class="text-sm text-muted-foreground">Click "Add Tenant" to create your first organization</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Tab -->
+      <div *ngIf="activeTab === 'users'" class="space-y-6">
+        <h1 class="text-3xl font-bold text-foreground">User Management</h1>
+        <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+          <div class="px-6 pt-6">
+            <h4 class="text-foreground">All Users</h4>
+            <p class="text-muted-foreground">Platform-wide user overview</p>
+          </div>
+          <div class="px-6 pb-6">
+            <div class="space-y-4">
+              <div *ngFor="let user of users" class="flex items-center justify-between p-4 rounded-lg bg-muted/30">
+                <div class="flex items-center space-x-4">
+                  <div class="h-10 w-10 rounded-lg bg-purple-600/10 flex items-center justify-center">
+                    <svg class="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="font-medium text-foreground">{{ user.name }}</h3>
+                    <p class="text-sm text-muted-foreground">{{ user.email }}</p>
+                    <p *ngIf="user.tenantId" class="text-xs text-muted-foreground">
+                      Tenant: {{ getTenantName(user.tenantId) }}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <span class="inline-flex items-center justify-center rounded-md border border-transparent px-2 py-0.5 text-xs font-medium" [class]="user.role === 'platform_admin' ? 'bg-primary text-primary-foreground' : user.role === 'platform_tenant_admin' ? 'bg-secondary text-secondary-foreground' : 'bg-outline text-outline-foreground'">
+                    {{ getRoleDisplayName(user.role) }}
+                  </span>
+                  <span *ngIf="getUserAssignedApplications(user.id).length > 0" class="inline-flex items-center justify-center rounded-md border border-transparent bg-outline px-2 py-0.5 text-xs font-medium text-outline-foreground">
+                    {{ getUserAssignedApplications(user.id).length }} Apps
+                  </span>
+                </div>
+              </div>
+              <div *ngIf="users.length === 0 && !loadingUsers" class="text-center py-8">
+                <svg class="h-12 w-12 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                </svg>
+                <p class="text-muted-foreground">No users found</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div *ngIf="activeTab === 'analytics'" class="space-y-6">
+        <h1 class="text-3xl font-bold text-foreground">Analytics</h1>
+        <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+          <div class="p-8 text-center">
+            <svg class="h-12 w-12 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            <p class="text-muted-foreground">Advanced analytics dashboard coming soon...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div *ngIf="activeTab === 'settings'" class="space-y-6">
+        <h1 class="text-3xl font-bold text-foreground">Platform Settings</h1>
+        <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border">
+          <div class="p-8 text-center">
+            <svg class="h-12 w-12 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <p class="text-muted-foreground">Platform configuration panel coming soon...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div>
+
+  <!-- Tenant Management Modal -->
+  <app-tenant-management-modal
+    [isOpen]="showTenantManagement"
+    [tenant]="selectedTenant"
+    [users]="users"
+    [applications]="applications"
+    (onClose)="handleCloseTenantManagement()"
+    (onAssignTenantAdmin)="handleAssignTenantAdmin($event)">
+  </app-tenant-management-modal>
+</div> 

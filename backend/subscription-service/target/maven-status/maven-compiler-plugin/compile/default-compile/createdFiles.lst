@@ -1,8 +1,10 @@
 com/ekyc/subscriptionservice/repository/SubscriptionRepository.class
 com/ekyc/subscriptionservice/config/SecurityConfig.class
 com/ekyc/subscriptionservice/dto/SubscriptionDto.class
+com/ekyc/subscriptionservice/dto/CreateSubscriptionRequest$CreateSubscriptionRequestBuilder.class
 com/ekyc/subscriptionservice/SubscriptionServiceApplication.class
 com/ekyc/subscriptionservice/entity/Subscription.class
 com/ekyc/subscriptionservice/dto/CreateSubscriptionRequest.class
+com/ekyc/subscriptionservice/entity/Subscription$SubscriptionBuilder.class
 com/ekyc/subscriptionservice/service/SubscriptionService.class
 com/ekyc/subscriptionservice/controller/SubscriptionController.class

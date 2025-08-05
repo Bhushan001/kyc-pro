@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DashboardComponent } from './components/dashboard.component';
 import '../styles/globals.css';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DashboardComponent],
+  imports: [RouterOutlet],
   template: `
-    <app-dashboard></app-dashboard>
+    <router-outlet></router-outlet>
   `,
 })
 export class AppComponent {}

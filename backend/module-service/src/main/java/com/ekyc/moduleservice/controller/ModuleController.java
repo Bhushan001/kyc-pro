@@ -4,6 +4,8 @@ import com.ekyc.moduleservice.dto.CreateModuleRequest;
 import com.ekyc.moduleservice.dto.ModuleDto;
 import com.ekyc.moduleservice.service.ModuleService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +14,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/modules")
+@Slf4j
+@RequiredArgsConstructor
 public class ModuleController {
   private final ModuleService service;
-  public ModuleController(ModuleService service) { this.service = service; }
 
   @PostMapping
   public ResponseEntity<ModuleDto> createModule(@Valid @RequestBody CreateModuleRequest req) {
